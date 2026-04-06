@@ -1,0 +1,27 @@
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <h1 class="logo">🎦 AI-MovieLA</h1>
+  </div>
+
+  <div class="navbar-center">
+    <div class="home hov"><a class="inl" href="/movie-la">Home</a></div>
+    <div class="search hov"><a class="inl" href="/ai-search">AI-Search</a></div>
+    <div class="Moodboards hov"><a class="inl" href="/moodboards">Moodboards</a></div>
+    <div class="search hov"><a class="inl" href="/explore">Explore All</a></div>
+    <div class="Moodboards hov"><a class="inl" href="/trending">Trending</a></div>
+    <!-- <div class="search hov"><a class="inl" href="/movie-la">Pricing</a></div> -->
+    <!-- <div class="Moodboards hov"><a class="inl" href="/trending">Notification</a></div> -->
+  </div>
+
+  <div class="navbar-right">
+    <% if (currentUser) { %>
+      <a href="/myaccount" class="nav-btn">Your Account</a>
+    <a href="/logout" class="nav-btn">Logout</a>
+
+    <% } else { %>
+      <a href="/signup" class="nav-btn">Sign Up</a>
+      <a href="/login" class="nav-btn">Login</a>
+    <% } %>
+  </div>
+</nav>

@@ -1,0 +1,93 @@
+<style>
+  
+    .account-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+   /* background: rgb(15, 23, 42); */
+  background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
+}
+
+.account-card {
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+  width: 360px;
+  color: #fff;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.9s ease, box-shadow 0.9s ease;
+ /* box-shadow: 0 0 35px rgba(0, 255, 255, 0.3);*/
+}
+
+.account-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 35px rgba(0, 255, 255, 0.3);
+}
+
+.profile-heading {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #00e5ff;
+}
+
+.profile-icon img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #00e5ff;
+  background-color: #222;
+  margin-bottom: 15px;
+}
+
+.username {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.account-details p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.account-details a {
+  color: #00bcd4;
+  text-decoration: none;
+}
+
+.account-details a:hover {
+  text-decoration: underline;
+}
+
+</style>
+
+
+
+
+<% layout("/layouts/boilerplate") %> 
+
+<div class="account-container">
+  <div class="account-card">
+    <h2 class="profile-heading">My Profile</h2>
+    <div class="profile-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+           alt="Profile Picture"
+           class="rounded-circle mx-auto d-block"
+           style="width: 120px; height: 120px; object-fit: cover;">
+    </div>
+    <h2 class="username">Welcome - <%= currentUser.username %></h2>
+    <div class="account-details">
+      <p><strong>Email:</strong> <%= currentUser.email %></p>
+       <p><strong>Explore:</strong> <a href="/explore">Explore All</a></p>
+      <p><strong>My MoodBoards:</strong> <a href="/moodboards">View MoodBoards</a></p>
+      <!-- <p><strong>My Wishlist:</strong> <a href="/moodboards">Add your Wishlist</a></p> -->
+      <p><strong>AI-Recommendations:</strong> <a href="/recommended">Movies For You..</a></p>
+    </div>
+  </div>
+</div>
+

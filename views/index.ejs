@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css"/>
+  <link rel="shortcut icon" href="/public/favicon.png" type="image/x-icon">
+</head>
+<body>
+  <% layout("/layouts/boilerplate") %> 
+
+
+  <main class="main-content">
+    <section class="hero">
+      <h2>Welcome to <span>AI-MovieLA</span> 🎦</h2>
+      <h3>Describe what you want to watch in natural language 
+        and get AI-powered movie recommendations. 
+        Create moodboards, explore the community, and discover your next favorite film.</h3>
+      <a href="/explore" class="explore-btn">Explore Movies</a>
+    </section>
+
+
+    <!-- <main class="main-content"> -->
+  <h2 class="section-heading"> Movies To Explore....</h2>
+  <!-- <h2 class="section-heading">High Rated Movies...</h2> -->
+
+  <div class="movie-grid">
+    <% movies.forEach(movie => { %>
+      <div class="movie-card">
+        <div class="card-image">
+          <img src="<%= movie.image %>" alt="<%= movie.title %>" />
+          <div class="card-title"><%= movie.title %></div>
+        </div>
+        <div class="card-meta">
+          <span><%= movie.genre %></span> • <%= movie.year %>
+        </div>
+        <div class="viewbtn"><a class="view" href="/movie-la/show/<%=movie._id%>">Show Details</a></div>
+      </div>
+    <% }) %>
+  </div>
+
+  </main>
+   
+  <style>
+    
+    .why-choose-section {
+  background-color: #0f172a; /* Dark slate background */
+  color: #ffffff;
+  padding: 60px 0;
+}
+
+.why-title {
+text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #38bdf8; /* Light blue accent */
+}
+
+.why-description {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.feature-item {
+  background-color: #1e293b;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.feature-item:hover {
+  background-color: #334155;
+}
+</style>
+
+
+<!-- Why Choose AI-MovieLa Section -->
+<div class="why-choose-section">
+  <div class="container text-center py-5">
+    <h2 class="why-title">Why Choose <span class="highlight">AI-MovieLa ?</span></h2>
+    <p class="why-description">Experience the future of movie recommendations with cutting-edge AI technology, personalized suggestions, and a sleek user interface.</p>
+    <div class="features-list">
+      <div class="feature-item">🎯 Personalized Recommendations</div>
+      <div class="feature-item">⚡ Lightning-Fast Search</div>
+      <div class="feature-item">🎬 Curated Movie Collections</div>
+      <div class="feature-item">🔒 Secure & Private</div>
+      <div class="feature-item"> 🔍 AI Movie Discovery</div>
+      <div class="feature-item">🎬 Advanced Filtering</div>
+      <div class="feature-item">🔒 Personal Moodboards</div>
+      <div class="feature-item">⭐ Pro Features</div>
+      <div class="feature-item">🎬 Social Discovery</div>
+      <div class="feature-item">🔒 Rich Movie Data</div>
+    </div>
+  </div>
+</div>
+  
+     
+
+<style>
+  body {
+        /* background: linear-gradient(rgb(15, 23, 42) 0%, rgb(30, 41, 59) 100%); */
+  /* background-color: #0f0c29; */
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.how-it-works-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.simple-process-btn {
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.main-heading {
+  font-size: 2.8rem;
+  color: #b084f9;
+  margin-bottom: 10px;
+}
+
+.subheading {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 50px;
+}
+
+.steps-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.step-card {
+  background-color: #1e1e2f;
+  border-radius: 16px;
+  padding: 30px;
+  width: 320px;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+.step-card:hover{
+    box-shadow: 0 10px 10px rgba(255, 255, 255, 0.05);
+}
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.pink {
+  background-color: #ff4da6;
+}
+
+.blue {
+  background-color: #4da6ff;
+}
+
+.green {
+  background-color: #4dff88;
+}
+
+.step-card h2 {
+  font-size: 1.4rem;
+  color: #ffcc70;
+  margin-bottom: 10px;
+}
+
+.step-card p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.example-box {
+  background-color: #2e2e3a;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: white;
+}
+
+.pink-box {
+  border-left: 4px solid #ff4da6;
+}
+
+.blue-box {
+  border-left: 4px solid #4da6ff;
+}
+
+.green-box {
+  border-left: 4px solid #4dff88;
+}
+
+.gradient-line {
+  margin-top: 60px;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, #ff4da6, #4da6ff, #4dff88);
+  border-radius: 3px;
+}
+</style>
+
+
+
+<div class="how-it-works-container">
+  <button class="simple-process-btn">Simple Process</button>
+  <h1 class="main-heading">How It Works</h1>
+  <p class="subheading">Discover your next favorite movie in just three simple steps</p>
+
+  <div class="steps-grid">
+    <!-- Step 1 -->
+    <div class="step-card">
+      <div class="step-circle pink">1</div>
+      <h2>Describe Your Mood</h2>
+      <p>Tell us what you're in the mood for. Use natural language like “I want a feel-good comedy” or “Show me something intense and thrilling.”</p>
+      <div class="example-box pink-box">
+        <strong>Example:</strong><br>
+        A psychological thriller about a detective solving a mysterious case.
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+      <div class="step-circle blue">2</div>
+      <h2>AI Analyzes & Recommends</h2>
+      <p>Our innovative AI analyzes your request, considers your filters, and searches thousands of movies to find the perfect match.</p>
+      <div class="example-box blue-box">
+        <strong>What AI considers:</strong>
+        <ul>
+          <li>Genre & mood matching</li>
+          <li>Rating & year preferences</li>
+          <li>Similar plot elements</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+      <div class="step-circle green">3</div>
+      <h2>Discover & Save</h2>
+      <p>Get personalized movie recommendations. Save favorites to moodboards and share with friends.</p>
+      <div class="example-box green-box">
+        <strong>What you get:</strong>
+        <ul>
+          <li>Personalized recommendations</li>
+          <li>IMDb & RT ratings</li>
+          <li>Save to moodboards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="gradient-line"></div>
+</div>
+
+
+<style>
+  body {
+   
+    
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 100px 20px;
+  text-align: center;
+ 
+}
+.hero-container:hover{
+   background-color: rgb(15, 23, 42);
+}
+
+.hero-heading {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.hero-subheading {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 40px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-pink {
+  background-color: #ff4da6;
+  color: white;
+  border: none;
+}
+
+.btn-pink:hover {
+  background-color: #f9057f;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-outline:hover {
+  background-color: white;
+  color: #0f0c29;
+}
+</style>
+
+
+
+
+<div class="hero-container">
+  <h1 class="hero-heading">Ready to Discover Your Next Favorite Movie?</h1>
+  <p class="hero-subheading">
+    Be among the first to experience the future of AI-powered movie discovery. Start your personalized journey now.
+  </p>
+
+  <div class="hero-buttons">
+    <a href="/ai-search" class="btn btn-pink">✨Start Discovering Now --></a>
+    <a href="/movie-la" class="btn btn-outline">Learn More</a>
+  </div>
+</div>
+
+
+
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

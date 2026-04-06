@@ -1,0 +1,50 @@
+<style>
+  
+    .footer {
+      height: 100px;
+  background-color: #121212;
+  color: #ccc;
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: 30px;
+  border: 2px solid rgb(10, 10, 10);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+   bottom: 0;
+   position: sticky;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  margin-top: 12px;
+}
+
+.footer-links a {
+  /* color: #0d6efd; */
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  
+  color: #e30d1b;
+}
+</style>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; <%= new Date().getFullYear() %> AI-MovieLA. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </div>
+</footer>

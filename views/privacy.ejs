@@ -1,0 +1,75 @@
+
+
+<% layout("/layouts/boilerplate") %>
+<style>
+    body {
+  /* background-color: #000; */
+      background: rgb(15, 23, 42);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.privacy-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  min-height: 80vh;
+}
+
+.privacy-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 700px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.privacy-title {
+  font-size: 2.5rem;
+  color: #ffcc70;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.privacy-list {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #ddd;
+}
+
+.privacy-list li {
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.privacy-list li::before {
+  content: "🔒";
+  position: absolute;
+  left: 0;
+}
+
+</style>
+
+<div class="privacy-container">
+  <div class="privacy-card">
+    <h1 class="privacy-title">Privacy at AI-MovieLA</h1>
+    <ul class="privacy-list">
+      <li> 1-We never share your personal data with third-party advertisers or tracking services.</li>
+      <li> 2-Your movie preferences and watch history are stored securely and used only to improve recommendations.</li>
+      <li> 3-All AI-driven suggestions are generated locally without exposing your identity.</li>
+      <li> 4-We use encrypted sessions to protect your login credentials and account activity.</li>
+      <li> 5-Cookies are used only for essential functionality — no hidden tracking or profiling.</li>
+      <li> 6-You can delete your account and all associated data anytime from your dashboard.</li>
+      <li> 7-We regularly audit our systems to ensure your privacy is never compromised.</li>
+    </ul>
+  </div>
+</div>

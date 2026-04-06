@@ -1,0 +1,211 @@
+<% layout("/layouts/boilerplate") %> 
+<style>
+/* Centered Page Wrapper */
+.show-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 150px);
+  padding: 40px;
+}
+
+/* Glassy Modal/Card */
+.glassy-modal {
+  display: flex;
+  background: rgba(255, 255, 255, 0.12); /* Whitish frosted glass */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  width: 850px;
+  max-width: 95%;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: #fff;
+  animation: modalFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Left: Poster */
+.modal-left {
+  flex: 0 0 350px;
+  background: rgba(255, 255, 255, 0.05); /* slightly lighter for the poster area */
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-left img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+}
+
+/* Right: Content */
+.modal-right {
+  flex: 1;
+  padding: 40px 40px 40px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.modal-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #b084f9; /* purple accent */
+  margin: 0 0 5px 0;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.modal-year {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 15px;
+}
+
+/* Badges */
+.badge-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.badge-imdb {
+  background: #f5c518;
+  color: #000;
+}
+
+.badge-genre {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  flex-grow: 1;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.modal-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.btn-readmore {
+  flex: 1;
+  background: linear-gradient(135deg, #ff4da6, #f9057f);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 5px 15px rgba(255, 77, 166, 0.3);
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-readmore:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 77, 166, 0.4);
+}
+
+.btn-addmood {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: #b084f9;
+  border: 1px solid #b084f9;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  text-align: center;
+}
+
+.btn-addmood:hover {
+  background: rgba(176, 132, 249, 0.15);
+  transform: translateY(-2px);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+  .glassy-modal {
+    flex-direction: column;
+    width: 100%;
+  }
+  .modal-left {
+    flex: 0 0 auto;
+    padding: 30px;
+  }
+  .modal-right {
+    padding: 10px 30px 40px 30px;
+  }
+}
+</style>
+
+<div class="show-wrapper">
+  <div class="glassy-modal">
+    
+    <!-- Left Poster -->
+    <div class="modal-left">
+      <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
+    </div>
+
+    <!-- Right Info -->
+    <div class="modal-right">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title"><%= movie.title %></h2>
+          <div class="modal-year"><%= movie.releaseYear || movie.year || "Unknown Year" %></div>
+        </div>
+        <!-- Close icon (optional UI element) -->
+        <a href="/movie-la" style="color: rgba(255,255,255,0.5); font-size: 1.5rem; text-decoration: none; align-self: flex-start; margin-top: 5px;">&times;</a>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge badge-imdb">⭐ IMDb</span>
+        <span class="badge badge-genre"><%= movie.genre || "N/A" %></span>
+      </div>
+
+      <p class="modal-desc">
+        <%= movie.description || "A captivating story crafted to match your mood and taste. Explore the profound narrative and immerse yourself in an unforgettable cinematic journey." %>
+      </p>
+
+      <div class="modal-actions">
+        <a href="#" class="btn-readmore">Read More</a>
+        <form action="/add-to-wishlist/<%= movie._id %>" method="POST" style="flex: 1; display: flex;">
+          <button type="submit" class="btn-addmood" style="width: 100%;">+ Add to Moodboard</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>

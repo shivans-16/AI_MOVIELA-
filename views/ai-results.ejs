@@ -1,0 +1,375 @@
+
+
+<% layout("/layouts/boilerplate") %>
+
+ <style>
+    body {
+  background-color: #0f0c29;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.results-container {
+  padding: 60px 40px;
+}
+
+.results-heading {
+  font-size: 2.5rem;
+  color: #ffcc70;
+  margin-bottom: 40px;
+  text-align: center;
+   /* background: rgba(255, 255, 255, 0.08); */
+   background: transparent;
+   background-color: transparent;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  
+}
+ /* .results-heading {
+  font-size: 2.5rem;
+  color: #ffcc70;
+  text-align: center;
+  padding: 1rem 2rem;
+  margin-bottom: 40px;
+  border-radius: 16px;
+ 
+} */
+
+
+
+.centered-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Scroll Row */
+.scroll-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+}
+
+.scroll-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background-color: #ff4da6;
+  border-radius: 4px;
+}
+
+/* Movie Card Styling */
+.movie-card {
+  min-width: 260px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+/* Poster Image */
+.movie-card img {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Info Section */
+.card-info {
+  padding: 16px;
+  background-color: #2e2e3a;
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-info h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #ffcc70;
+}
+
+.card-info p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-top: 8px;
+}
+
+/* View Button */
+.view-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #ff4da6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: #e63c91;
+}
+
+/* Detail Box */
+.detail-box {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e1e2f;
+  padding: 30px;
+  border-radius: 16px;
+  z-index: 1000;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  display: none;
+}
+
+.detail-box img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.detail-info h2 {
+  color: #ffcc70;
+  margin-bottom: 10px;
+}
+
+.detail-info p {
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.detail-box.hidden {
+  display: none;
+}
+
+.detail-box:not(.hidden) {
+  display: block;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+</style> 
+<!-- <style>
+    body {
+  background-color: #0f0c29;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.results-container {
+  padding: 60px 40px;
+}
+
+.results-heading {
+  font-size: 2.5rem;
+  color: #ffcc70;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.centered-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.scroll-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+}
+
+.scroll-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background-color: #ff4da6;
+  border-radius: 4px;
+}
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 260px;
+  border-radius: 12px;
+  background-color: #1e1e2f;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition: box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  box-shadow: 0 10px 25px rgba(255, 165, 0, 0.4);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 16px;
+  background-color: #2e2e3a;
+  height: 35%;
+}
+
+.card-info h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #ffcc70;
+}
+
+.card-info p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-top: 8px;
+}
+
+.view-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #ff4da6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.view-btn:hover {
+  background-color: #e63c91;
+}
+
+.detail-box {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e1e2f;
+  padding: 30px;
+  border-radius: 16px;
+  z-index: 1000;
+  width: 80%;
+  max-width: 700px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  display: none;
+}
+
+.detail-box img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.detail-info h2 {
+  color: #ffcc70;
+  margin-bottom: 10px;
+}
+
+.detail-info p {
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.detail-box.hidden {
+  display: none;
+}
+.detail-box:not(.hidden){
+    display: block;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+</style> -->
+
+
+
+
+<div class="results-container">
+  <h1 class="results-heading">AI Searched Movies for You</h1>
+
+  <% if (movies.length === 0) { %>
+    <p class="no-results">No movies found for selected filters.</p>
+  <% } else { %>
+    <div class="<%= movies.length === 1 ? 'centered-card' : 'scroll-row' %>">
+      <% movies.forEach(movie => { %>
+        <div class="movie-card">
+          <img src="<%= movie.image %>" alt="<%= movie.title %>">
+          <div class="card-info">
+            <h3><%= movie.title %></h3>
+            <p><%= movie.genre %> | <%= movie.year %></p>
+            <button class="view-btn" onclick="showDetails('<%= movie._id %>')">View</button>
+            
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <!-- Detail Box -->
+  <div id="detail-box" class="detail-box hidden">
+    <button class="close-btn" onclick="hideDetails()">❌</button>
+    <img id="detail-image" src="" alt="">
+    <div class="detail-info">
+      <h2 id="detail-title"></h2>
+      <p id="detail-genre"></p>
+      <p id="detail-year"></p>
+      <p id="detail-rating"></p>
+      <p id="detail-description"></p>
+    </div>
+  </div>  
+  
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-MovieLA</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" sizes="16x16" href="/public/favicon.png" type="image/x-icon" />
+<!-- <link rel="icon" sizes="16x16" href="/favicon-16.png" type="image/png" /> -->
+
+</head>
+<body>
+    <div class="layout-wrapper">
+    <%- include ('../includes/navbar.ejs') %>
+    <%- include ('../includes/flash.ejs') %>
+   
+    <main class="main-content">
+        <%- body %>
+    </main>
+     <%- include ('../includes/footer.ejs') %>
+     </div>
+     
+     <script>
+       // Global fallback for missing or broken images
+       document.addEventListener("DOMContentLoaded", () => {
+         const fallbackImageUrl = "https://via.placeholder.com/400x600/1a1a1a/e50914?text=Poster+Not+Found";
+         const images = document.querySelectorAll("img");
+         images.forEach(img => {
+           // If the image is already broken on load, fast check:
+           if (!img.src || img.src.includes("N/A") || img.src.trim() === "N/A") {
+             img.src = fallbackImageUrl;
+           }
+           // Add an error listener
+           img.addEventListener("error", function() {
+             if (this.src !== fallbackImageUrl) {
+               this.src = fallbackImageUrl;
+             }
+           });
+         });
+       });
+     </script>
+</body>
+</html>

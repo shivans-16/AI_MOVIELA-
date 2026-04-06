@@ -1,0 +1,88 @@
+<!-- <style>
+    .flash {
+  padding: 15px;
+  margin: 20px auto;
+  width: 80%;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.flash.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.flash.error {
+  background-color: #f8d7da;
+  color: #842029;
+}
+</style>
+
+
+<% if (success && success.length > 0) { %>
+  <div class="flash success"><%= success.message %></div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="flash error"><%= error.message %></div>
+<% } %> -->
+
+<style>
+  .flash-message {
+  position: relative;
+  padding: 12px 20px;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flash-message.success {
+  /* background-color: #4CAF50; */
+  background-color: rgb(23, 23, 42);
+}
+
+.flash-message.error {
+  background-color: #f44336;
+}
+
+.flash-message .close-flash {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+</style>
+
+
+
+<% if (success && success.length > 0) { %>
+  <div class="flash-message success">
+    <span><%= success %></span>
+    <button class="close-flash">&times;</button>
+  </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="flash-message error">
+    <span><%= error %></span>
+    <button class="close-flash">&times;</button>
+  </div>
+<% } %>
+
+
+<script>
+  document.querySelectorAll('.close-flash').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.parentElement.style.display = 'none';
+    });
+  });
+</script>

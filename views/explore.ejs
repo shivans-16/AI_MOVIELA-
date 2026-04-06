@@ -1,0 +1,188 @@
+
+<% layout("/layouts/boilerplate") %> 
+
+<style>
+  /* Body and Section Background */
+body {
+   background: rgb(15, 23, 42);
+  /* background-color: #0f0c29; */
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  margin: 0;
+}
+
+/* Superhero Section Container */
+.superhero-section {
+  background: linear-gradient(to right, #1f1c2c, #928dab);
+  padding: 60px 40px;
+  border-radius: 20px;
+  max-width: 100%;
+  margin: 60px auto;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.2);
+  overflow-x: hidden;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+/* Section Title with Rocket Icon */
+.section-header h1 {
+  font-size: 2.5rem;
+  color: #ffcc70;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.section-header i {
+  margin-right: 10px;
+  color: orange;
+}
+
+/* Horizontal Scroll Row */
+.scroll-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+}
+
+.scroll-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background-color: orange;
+  border-radius: 4px;
+}
+
+/* Movie Card Styling */
+.movie-card {
+  min-width: 260px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 12px rgba(233, 155, 155, 0.4);
+  /* box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4); */
+}
+
+/* Poster Image */
+.movie-card img {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Info Section */
+.card-info {
+  height: 35%;
+  padding: 16px;
+  background-color: #2e2e3a;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-info h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #ffcc70;
+}
+
+.card-info p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 8px;
+}
+
+</style>
+
+<div class="superhero-section">
+  <div class="section-header">
+    <h1><i class="fas fa-rocket"></i>🚀 Superheroes</h1>
+  </div>
+
+  <div class="scroll-row">
+    <% superheroes.forEach(movie => { %>
+      <div class="movie-card">
+      <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
+        <div class="card-info">
+          <h3><%= movie.title %></h3>
+          <p><%= movie.releaseYear %></p>
+        </div>
+      </div>
+     
+    <% }) %>
+  </div>
+</div>
+
+
+<div class="superhero-section">
+  <div class="section-header">
+    <h1><i class="fas fa-rocket"></i>🕵️‍♂️ The Mafia's</h1>
+  </div>
+
+  <div class="scroll-row">
+    <% mafias.forEach(movie => { %>
+      <div class="movie-card">
+        <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
+        <div class="card-info">
+          <h3><%= movie.title %></h3>
+          <p><%= movie.releaseYear %></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<div class="superhero-section">
+  <div class="section-header">
+    <h1><i class="fas fa-rocket"></i>😍 Romance and Drama</h1>
+  </div>
+
+  <div class="scroll-row">
+    <% romance.forEach(movie => { %>
+      <div class="movie-card">
+        <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
+        <div class="card-info">
+          <h3><%= movie.title %></h3>
+          <p><%= movie.releaseYear %></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<div class="superhero-section">
+  <div class="section-header">
+    <h1><i class="fas fa-rocket"></i>🌟 Bollywood</h1>
+  </div>
+
+  <div class="scroll-row">
+    <% bollywood.forEach(movie => { %>
+      <div class="movie-card">
+        <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
+        <div class="card-info">
+          <h3><%= movie.title %></h3>
+          <p><%= movie.releaseYear %></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
