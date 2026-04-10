@@ -644,3 +644,266 @@ color: #e30d1b;
     display: none; /* Hide on very small screens or use a burger menu */
   }
 }
+
+/* Navbar Upgrade Link */
+.nav-upgrade {
+  color: #ffd700 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Upgrade Page Styles */
+.upgrade-container {
+  padding: 40px 20px 100px; /* More bottom padding for safe space */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.upgrade-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.upgrade-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.upgrade-header p {
+  color: #aaa;
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 40px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.pricing-card {
+  border-radius: 32px;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.pricing-card:hover {
+  transform: translateY(-15px) scale(1.02);
+}
+
+.card-glass-base {
+  backdrop-filter: blur(25px) saturate(200%);
+  -webkit-backdrop-filter: blur(25px) saturate(200%);
+  border-radius: 30px;
+  padding: 50px 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+/* Free Plan - Glassy Whitish */
+.card-free {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-free .card-glass-base {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Pro Plan - Glassy Golden - "Alag" Theme */
+.card-pro {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(184, 134, 11, 0.05) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.1);
+}
+
+.card-pro::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 215, 0, 0.1) 90deg,
+    transparent 180deg
+  );
+  animation: rotateGolden 10s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotateGolden {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.card-pro .card-glass-base {
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.card-pro .card-glass-base::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: 0.5s;
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.pro-tag {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #000;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+.plan-name {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+}
+
+.card-pro .plan-name {
+  background: linear-gradient(to right, #ffd700, #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.plan-price {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 35px;
+  display: flex;
+  align-items: baseline;
+}
+
+.card-pro .plan-price {
+  color: #fff;
+}
+
+.plan-price span {
+  font-size: 1.1rem;
+  color: #777;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.plan-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.plan-features li {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ccc;
+  font-size: 1.05rem;
+}
+
+.plan-features li i {
+  font-size: 1.1rem;
+}
+
+.plan-features li i.fa-check {
+  color: #4ade80;
+}
+
+.plan-features li i.fa-times {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.card-pro .plan-features li i.fa-check {
+  color: #ffd700;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+.upgrade-btn {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+  color: #000;
+  border: none;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 40px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
+  filter: brightness(1.1);
+}
+
+.current-plan-badge {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  margin-top: 40px;
+  font-weight: 700;
+  color: #888;
+}
+
+@media (max-width: 900px) {
+  .upgrade-header h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

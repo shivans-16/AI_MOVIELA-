@@ -10,8 +10,9 @@
     <div class="Moodboards hov"><a class="inl" href="/moodboards">Moodboards</a></div>
     <div class="search hov"><a class="inl" href="/explore">Explore All</a></div>
     <div class="Moodboards hov"><a class="inl" href="/trending">Trending</a></div>
-    <!-- <div class="search hov"><a class="inl" href="/movie-la">Pricing</a></div> -->
-    <!-- <div class="Moodboards hov"><a class="inl" href="/trending">Notification</a></div> -->
+    <% if (currentUser) { %>
+      <div class="upgrade hov"><a class="inl nav-upgrade" href="/upgrade">Upgrade to Pro</a></div>
+    <% } %>
   </div>
 
   <div class="navbar-right">

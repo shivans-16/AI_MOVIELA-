@@ -402,9 +402,9 @@ router.post('/ai-results', async (req, res) => {
 });
 
 
-
-
-
-
+// Upgrade to Pro Page
+router.get('/upgrade', (req, res) => {
+  res.render('upgrade');
+});
 
 module.exports = router;
