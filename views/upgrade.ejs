@@ -38,8 +38,46 @@
                     <li><i class="fas fa-check"></i> Lightning Fast AI Processing</li>
                     <li><i class="fas fa-check"></i> Early Access to New Features</li>
                 </ul>
-                <button class="upgrade-btn">Upgrade</button>
+                <button id="pro-upgrade-btn" class="upgrade-btn">Upgrade</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('pro-upgrade-btn').addEventListener('click', async function() {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        
+        try {
+            // Show loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing...';
+            btn.disabled = true;
+
+            // Call the API
+            const response = await fetch('/api/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Redirect to payment page
+                btn.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
+                setTimeout(() => {
+                    window.location.href = '/payment';
+                }, 800);
+            } else {
+                throw new Error(data.message || 'Failed to initialize upgrade');
+            }
+        } catch (err) {
+            console.error('Upgrade error:', err);
+            alert('Something went wrong. Please try again.');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    });
+</script>

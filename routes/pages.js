@@ -407,4 +407,30 @@ router.get('/upgrade', (req, res) => {
   res.render('upgrade');
 });
 
+// Payment Page [NEW]
+router.get('/payment', (req, res) => {
+  if (!req.isAuthenticated()) {
+    req.flash('error', 'You must be logged in to access payment');
+    return res.redirect('/login');
+  }
+  res.render('payment');
+});
+
+// Mock Create Order API [NEW]
+router.post('/api/create-order', (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+  
+  // Simulate order creation logic
+  console.log('Creating order for user:', req.user.username);
+  
+  // Return success
+  res.json({ 
+    success: true, 
+    orderId: 'ORD' + Math.floor(Math.random() * 1000000),
+    amount: 9.99 
+  });
+});
+
 module.exports = router;

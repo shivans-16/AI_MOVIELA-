@@ -1,0 +1,114 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="payment-wrapper">
+        <!-- Animated Whitish Fumes Background -->
+        <div class="fume-container">
+            <div class="fume fume-1"></div>
+            <div class="fume fume-2"></div>
+            <div class="fume fume-3"></div>
+        </div>
+
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1>Complete Your Upgrade</h1>
+                <p>Unlock the full power of AI-MovieLA. Premium features are just a step away.</p>
+            </div>
+
+            <div class="payment-grid">
+                <!-- Left: Order Summary -->
+                <div class="payment-card summary-card">
+                    <div class="card-glass">
+                        <h3>Order Summary</h3>
+                        <div class="summary-item">
+                            <span>Pro Plan Monthly</span>
+                            <span>$9.99</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Platform Fee</span>
+                            <span>$0.00</span>
+                        </div>
+                        <hr>
+                        <div class="summary-total">
+                            <span>Total Amount</span>
+                            <span>$9.99</span>
+                        </div>
+                        <div class="secure-badge">
+                            <i class="fas fa-shield-alt"></i> 100% Secure Transaction
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Payment Methods -->
+                <div class="payment-card methods-card">
+                    <div class="card-glass">
+                        <h3>Select Payment Method</h3>
+
+                        <div class="method-options">
+                            <!-- UPI -->
+                            <div class="payment-method active" data-method="upi">
+                                <div class="method-info">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI (GPay, PhonePe, Paytm)</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+
+                            <!-- Cards -->
+                            <div class="payment-method" data-method="card">
+                                <div class="method-info">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Debit / Credit Card</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+
+                            <!-- Net Banking -->
+                            <div class="payment-method" data-method="netbanking">
+                                <div class="method-info">
+                                    <i class="fas fa-university"></i>
+                                    <span>Net Banking</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+
+                            <!-- Wallet -->
+                            <div class="payment-method" data-method="wallet">
+                                <div class="method-info">
+                                    <i class="fas fa-wallet"></i>
+                                    <span>Wallets</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="payment-actions">
+                            <button id="pay-now-btn" class="pay-btn">
+                                Pay $9.99 Securely
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', () => {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                method.classList.add('active');
+            });
+        });
+
+        document.getElementById('pay-now-btn').addEventListener('click', function () {
+            const activeMethod = document.querySelector('.payment-method.active').dataset.method;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            this.disabled = true;
+
+            // Simulate payment completion
+            setTimeout(() => {
+                alert('Payment Successful! Welcome to Pro.');
+                window.location.href = '/ai-moviela';
+            }, 3000);
+        });
+    </script>
