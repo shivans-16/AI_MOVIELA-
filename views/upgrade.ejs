@@ -50,11 +50,11 @@
         const originalText = btn.innerHTML;
         
         try {
-            // Show loading state
+
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing...';
             btn.disabled = true;
 
-            // Call the API
+
             const response = await fetch('/api/create-order', {
                 method: 'POST',
                 headers: {
@@ -65,7 +65,7 @@
             const data = await response.json();
 
             if (data.success) {
-                // Redirect to payment page
+
                 btn.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
                 setTimeout(() => {
                     window.location.href = '/payment';

@@ -1,5 +1,5 @@
 
-/* Reset & Base */
+
 * {
   margin: 0;
   padding: 0;
@@ -9,26 +9,26 @@
 
 
 
-/* Make body and html full height */
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-/* Flex wrapper to push footer down */
+
 .layout-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Main content grows to fill space */
+
 .main-content {
   flex: 1;
 }
 
-/* Footer stays at bottom */
+
 .footer {
   background: rgba(10, 10, 10, 0.6);
   backdrop-filter: blur(12px);
@@ -95,7 +95,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Search Bar */
+
 .search-form {
   display: flex;
   align-items: center;
@@ -130,11 +130,11 @@ body {
   color: #fff;
 }
 
-/* Navbar Buttons */
+
 .navbar-right .nav-btn {
   margin-left: 20px;
   padding: 8px 18px;
-  /* background-color: #e50914; */
+
   color: #fff;
   border-radius: 25px;
   text-decoration: none;
@@ -144,12 +144,12 @@ body {
 }
 
 .navbar-right .nav-btn:hover {
-  /* color: #b00610; */
+
   color: #e50914;
   transform: scale(1.05);
-} */
+}
 
-/* Hero Section */
+
 .main-content {
   padding: 80px 40px;
   
@@ -297,11 +297,11 @@ body {
 }
 .view{
   text-decoration: none;
-  /* color:#1f1f1f; */
-   /* color:#1a1a1a; */
+
+
    color: #b00610;
 }
-/* Animation he*/
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -376,10 +376,10 @@ color: #e30d1b;
 
 }
 
-/**//**//**//**/
 
 
-/* Auth Forms - Premium Glassmorphism Redesign */
+
+
 .auth-form {
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(30px) saturate(200%);
@@ -525,7 +525,7 @@ color: #e30d1b;
 
 /**//**//**/
 
-/* Flash Messages - Glassmorphism Redesign */
+
 .flash-container {
   position: fixed;
   top: 90px;
@@ -556,8 +556,8 @@ color: #e30d1b;
 }
 
 .flash-message.success {
-  background: rgba(255, 255, 255, 0.12); /* Whitish Glass */
-  border-left: 4px solid #4ade80; /* Subtle green success indicator */
+  background: rgba(255, 255, 255, 0.12); 
+  border-left: 4px solid #4ade80; 
 }
 
 .flash-message.success i {
@@ -567,7 +567,7 @@ color: #e30d1b;
 }
 
 .flash-message.error {
-  background: rgba(220, 38, 38, 0.15); /* Reddish Glass */
+  background: rgba(220, 38, 38, 0.15); 
   border-left: 4px solid #ef4444;
   border-color: rgba(220, 38, 38, 0.25);
 }
@@ -632,7 +632,7 @@ color: #e30d1b;
   animation: flashOut 0.4s ease forwards;
 }
 
-/* Responsive Media Queries */
+
 @media (max-width: 1100px) {
   .navbar-center {
     font-size: 0.95rem;
@@ -701,20 +701,20 @@ color: #e30d1b;
   }
   
   .navbar-center {
-    display: none; /* Hide on very small screens or use a burger menu */
+    display: none;
   }
 }
 
-/* Navbar Upgrade Link */
+
 .nav-upgrade {
   color: #ffd700 !important;
   font-weight: 700 !important;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* Upgrade Page Styles */
+
 .upgrade-container {
-  padding: 40px 20px 100px; /* More bottom padding for safe space */
+  padding: 40px 20px 100px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -783,7 +783,7 @@ color: #e30d1b;
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Pro Plan - Glassy Golden - "Alag" Theme */
+
 .card-pro {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(184, 134, 11, 0.05) 100%);
   border: 1px solid rgba(255, 215, 0, 0.4);
@@ -968,7 +968,7 @@ color: #e30d1b;
   }
 }
 
-/* Payment Page Styles */
+
 .payment-wrapper {
   min-height: 100vh;
   position: relative;
@@ -1159,7 +1159,7 @@ hr {
   cursor: not-allowed;
 }
 
-/* Response Fixes */
+
 @media (max-width: 900px) {
   .payment-grid {
     grid-template-columns: 1fr;
@@ -1175,9 +1175,9 @@ hr {
   }
 }
 
-/* Redesign Utilities */
 
-/* Reveal Animations */
+
+
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -1189,7 +1189,7 @@ hr {
   transform: translateY(0);
 }
 
-/* Whitish Glass Category */
+
 .glass-white {
   background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
@@ -1214,7 +1214,7 @@ hr {
   outline: none;
 }
 
-/* Success Modal Styles */
+
 .success-modal-overlay {
   position: fixed;
   top: 0;

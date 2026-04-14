@@ -25,12 +25,12 @@
     const flashMessages = document.querySelectorAll('.flash-message');
     
     flashMessages.forEach(flash => {
-      // Auto-dismiss after 5 seconds
+
       const timeout = setTimeout(() => {
         dismissFlash(flash);
       }, 5000);
 
-      // Close button functionality
+
       const closeBtn = flash.querySelector('.close-flash');
       if (closeBtn) {
         closeBtn.addEventListener('click', () => {

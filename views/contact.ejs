@@ -74,7 +74,7 @@
     .contact-form-panel {
       flex: 1.2;
       padding: 60px;
-      /* This uses the whitish glass theme from style.css but enhanced here */
+
       background: rgba(255, 255, 255, 0.07);
     }
 
@@ -244,7 +244,7 @@
     </div>
   </div>
 
-  <!-- Success Modal -->
+
   <div class="success-modal-overlay" id="successOverlay">
     <div class="success-modal">
       <div class="success-icon">
@@ -257,7 +257,7 @@
   </div>
 
   <script>
-    // Manual reveal trigger for this page
+
     setTimeout(() => {
       document.querySelector('.reveal').classList.add('active');
     }, 100);
@@ -269,23 +269,23 @@
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Disable button and show loading state
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
 
-      // Simulate API call
+
       setTimeout(() => {
-        // Show success modal
+
         successOverlay.classList.add('active');
 
-        // Reset form
+
         contactForm.reset();
 
-        // Reset button
+
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
 
-        // Auto redirect after 2 seconds
+
         setTimeout(() => {
           window.location.href = '/movie-la';
         }, 2000);
