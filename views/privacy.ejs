@@ -1,74 +1,162 @@
 <% layout("/layouts/boilerplate") %>
-  <style>
-    body {
-      /* background-color: #000; */
-      background: rgb(15, 23, 42);
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
 
-    .privacy-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 80px 20px;
-      min-height: 80vh;
-    }
+<style>
+  .privacy-wrapper {
+    padding: 100px 20px;
+    background: radial-gradient(circle at top left, rgba(229, 9, 20, 0.05), transparent 60%);
+    min-height: 90vh;
+  }
 
-    .privacy-card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 700px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  .privacy-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 80px;
+  }
 
-    .privacy-title {
-      font-size: 2.5rem;
-      color: #ffcc70;
-      margin-bottom: 20px;
-      text-align: center;
-      font-weight: bold;
-    }
+  .privacy-header h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #fff, #999);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    .privacy-list {
-      list-style: none;
-      padding: 0;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #ddd;
-    }
+  .privacy-header p {
+    font-size: 1.2rem;
+    color: #888;
+  }
 
-    .privacy-list li {
-      margin-bottom: 12px;
-      position: relative;
-      padding-left: 20px;
-    }
+  .privacy-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
 
-    .privacy-list li::before {
-      content: "🔒";
-      position: absolute;
-      left: 0;
-    }
-  </style>
+  .privacy-box {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 24px;
+    transition: all 0.4s ease;
+    cursor: default;
+  }
 
-  <div class="privacy-container">
-    <div class="privacy-card">
-      <h1 class="privacy-title">Privacy at AI-MovieLA</h1>
-      <ul class="privacy-list">
-        <li> 1-We never share your personal data with third-party advertisers or tracking services.</li>
-        <li> 2-Your movie preferences and watch history are stored securely and used only to improve recommendations.
-        </li>
-        <li> 3-All AI-driven suggestions are generated locally without exposing your identity.</li>
-        <li> 4-We use encrypted sessions to protect your login credentials and account activity.</li>
-        <li> 5-Cookies are used only for essential functionality — no hidden tracking or profiling.</li>
-        <li> 6-You can delete your account and all associated data anytime from your dashboard.</li>
-        <li> 7-We regularly audit our systems to ensure your privacy is never compromised.</li>
-        <li> 8- Yours privacy is our first Priority.</li>
-      </ul>
+  .privacy-box:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  .privacy-box i {
+    font-size: 2rem;
+    color: #e50914;
+    margin-bottom: 25px;
+  }
+
+  .privacy-box h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
+  .privacy-box p {
+    color: #aaa;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .privacy-footer {
+    text-align: center;
+    margin-top: 80px;
+    padding: 40px;
+    background: rgba(229, 9, 20, 0.03);
+    border-radius: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .privacy-footer p {
+    color: #ccc;
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .privacy-header h1 { font-size: 2.5rem; }
+    .privacy-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="privacy-wrapper">
+  <div class="privacy-header reveal">
+    <h1>Privacy & Trust</h1>
+    <p>At AI-MovieLA, we believe your entertainment choices are personal. Our commitment to privacy is built into the core of our recommendation engine.</p>
+  </div>
+
+  <div class="privacy-grid">
+    <div class="privacy-box reveal">
+      <i class="fas fa-user-shield"></i>
+      <h3>Data Anonymization</h3>
+      <p>We use advanced differential privacy techniques to ensure that your specific watch history cannot be traced back to your real-world identity.</p>
+    </div>
+
+    <div class="privacy-box reveal" style="transition-delay: 0.1s;">
+      <i class="fas fa-server"></i>
+      <h3>Local Processing</h3>
+      <p>Where possible, our lightweight AI models process your preferences directly on your device, minimizing data transfer to our servers.</p>
+    </div>
+
+    <div class="privacy-box reveal" style="transition-delay: 0.2s;">
+      <i class="fas fa-no-entry"></i>
+      <h3>Zero Third-Party Ads</h3>
+      <p>We never sell your profile to advertisers. Our revenue comes from premium subscriptions, not your personal data.</p>
+    </div>
+
+    <div class="privacy-box reveal" style="transition-delay: 0.3s;">
+      <i class="fas fa-cookie-bite"></i>
+      <h3>Essential Cookies only</h3>
+      <p>We don't use tracking pixels or cross-site cookies. We only store what's necessary to keep you logged in and your settings saved.</p>
+    </div>
+
+    <div class="privacy-box reveal" style="transition-delay: 0.4s;">
+      <i class="fas fa-trash-alt"></i>
+      <h3>Right to be Forgotten</h3>
+      <p>Want a fresh start? You can purge your entire recommendation profile and all associated data with a single click in your dashboard.</p>
+    </div>
+
+    <div class="privacy-box reveal" style="transition-delay: 0.5s;">
+      <i class="fas fa-lock"></i>
+      <h3>Military-Grade Encryption</h3>
+      <p>All communication between your device and our systems is secured using AES-256 and TLS 1.3 standards.</p>
     </div>
   </div>
+
+  <div class="privacy-footer reveal">
+    <p>"Your curiosity shouldn't come at the cost of your privacy. We build AI that respects the person behind the screen." — The AI-MovieLA Safety Team</p>
+  </div>
+</div>
+
+<script>
+  // Reveal trigger for privacy items
+  const observerOptions = {
+    threshold: 0.1
+  };
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
