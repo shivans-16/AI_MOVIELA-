@@ -190,18 +190,31 @@
       </div>
 
       <div class="badge-row">
-        <span class="badge badge-imdb">⭐ IMDb</span>
+        <% 
+           let imdbRating = "N/A";
+           let rtRating = "N/A";
+           if (externalData && externalData.ratings) {
+             const imdb = externalData.ratings.find(r => r.Source === "Internet Movie Database");
+             const rt = externalData.ratings.find(r => r.Source === "Rotten Tomatoes");
+             if (imdb) imdbRating = imdb.Value;
+             if (rt) rtRating = rt.Value;
+           }
+        %>
+        <span class="badge badge-imdb" title="IMDb Rating">⭐ <%= imdbRating %></span>
+        <% if (rtRating !== "N/A") { %>
+          <span class="badge" style="background: #ff4da6; color: white;" title="Rotten Tomatoes">🍅 <%= rtRating %></span>
+        <% } %>
         <span class="badge badge-genre"><%= movie.genre || "N/A" %></span>
       </div>
 
       <p class="modal-desc">
-        <%= movie.description || "A captivating story crafted to match your mood and taste. Explore the profound narrative and immerse yourself in an unforgettable cinematic journey." %>
+        <%= (externalData && externalData.plot) || movie.description || "A captivating story crafted to match your mood and taste. Explore the profound narrative and immerse yourself in an unforgettable cinematic journey." %>
       </p>
 
       <div class="modal-actions">
-        <a href="#" class="btn-readmore">Read More</a>
+        <a href="<%= imdbUrl %>" target="_blank" class="btn-readmore">Read More</a>
         <form action="/add-to-wishlist/<%= movie._id %>" method="POST" style="flex: 1; display: flex;">
-          <button type="submit" class="btn-addmood" style="width: 100%;">+ Add to Moodboard</button>
+          <button type="submit" class="btn-addmood" style="width: 100%;">+ Add to Watchlist</button>
         </form>
       </div>
 
