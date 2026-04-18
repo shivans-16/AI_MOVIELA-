@@ -212,7 +212,7 @@
       </p>
 
       <div class="modal-actions">
-        <a href="<%= imdbUrl %>" target="_blank" class="btn-readmore">Read More</a>
+        <a href="/movie-la/details/<%= movie._id %>" class="btn-readmore">Read More</a>
         <form action="/add-to-wishlist/<%= movie._id %>" method="POST" style="flex: 1; display: flex;">
           <button type="submit" class="btn-addmood" style="width: 100%;">+ Add to Watchlist</button>
         </form>

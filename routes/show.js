@@ -43,4 +43,33 @@ router.get('/movie-la/show/:id', async (req, res) => {
   }
 });
 
+// Full Details Page Route
+router.get('/movie-la/details/:id', async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+      return res.status(404).send('Movie not found');
+    }
+
+    let fullData = { ...movie._doc };
+    
+    try {
+      const apiKey = "a72e8af8";
+      // Fetching with plot=full for detailed description
+      const omdbRes = await axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(movie.title)}&y=${movie.year}&plot=full`);
+      
+      if (omdbRes.data && omdbRes.data.Response === "True") {
+        fullData = { ...fullData, ...omdbRes.data };
+      }
+    } catch (apiErr) {
+      console.error("⚠️ OMDb API error in details:", apiErr.message);
+    }
+
+    res.render('movie-details.ejs', { movie: fullData });
+  } catch (err) {
+    console.error("❌ Error fetching movie details:", err.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;
