@@ -4,6 +4,13 @@ const Wishlist = require('../models/wishlist');
 const Movie=require("../models/movie");
 const axios=require('axios');
 const { getRecommendedMovies } = require('../utils/recommendationEngine');
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 router.get('/ai-search', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -416,21 +423,60 @@ router.get('/payment', (req, res) => {
   res.render('payment');
 });
 
-// Mock Create Order API [NEW]
-router.post('/api/create-order', (req, res) => {
+// Create Razorpay Order API
+router.post('/api/create-order', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
   }
-  
-  // Simulate order creation logic
-  console.log('Creating order for user:', req.user.username);
-  
-  // Return success
-  res.json({ 
-    success: true, 
-    orderId: 'ORD' + Math.floor(Math.random() * 1000000),
-    amount: 9.99 
-  });
+
+  const options = {
+    amount: 999, // amount in the smallest currency unit (9.99 USD * 100)
+    currency: "USD",
+    receipt: "receipt_" + req.user._id,
+  };
+
+  try {
+    const order = await razorpay.orders.create(options);
+    res.json({
+      success: true,
+      order_id: order.id,
+      amount: order.amount,
+      key_id: process.env.RAZORPAY_KEY_ID
+    });
+  } catch (err) {
+    console.error("Razorpay Order Error:", err);
+    res.status(500).json({ success: false, message: "Order creation failed" });
+  }
+});
+
+// Verify Razorpay Payment API
+router.post('/api/verify-payment', async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+  const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
+  hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
+  const generated_signature = hmac.digest('hex');
+
+  if (generated_signature === razorpay_signature) {
+    // Payment is verified
+    try {
+      // Update User status in DB
+      const User = require('../models/user');
+      await User.findByIdAndUpdate(req.user._id, { isPro: true }); // Assuming isPro field exists or you'll add it
+      
+      console.log('Payment Verified for user:', req.user.username);
+      res.json({ success: true, message: "Payment verified successfully" });
+    } catch (err) {
+      console.error("Database Update Error:", err);
+      res.status(500).json({ success: false, message: "Verification failed at DB level" });
+    }
+  } else {
+    res.status(400).json({ success: false, message: "Invalid signature" });
+  }
 });
 
 module.exports = router;

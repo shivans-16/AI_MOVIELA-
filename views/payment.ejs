@@ -92,6 +92,7 @@
         </div>
     </div>
 
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         document.querySelectorAll('.payment-method').forEach(method => {
             method.addEventListener('click', () => {
@@ -100,15 +101,82 @@
             });
         });
 
-        document.getElementById('pay-now-btn').addEventListener('click', function () {
-            const activeMethod = document.querySelector('.payment-method.active').dataset.method;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            this.disabled = true;
+        document.getElementById('pay-now-btn').addEventListener('click', async function () {
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Initializing...';
+            btn.disabled = true;
 
+            try {
+                // 1. Create Order on Backend
+                const response = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to create order');
+                }
 
-            setTimeout(() => {
-                alert('Payment Successful! Welcome to Pro.');
-                window.location.href = '/movie-la';
-            }, 3000);
+                // 2. Open Razorpay Checkout
+                const options = {
+                    key: data.key_id,
+                    amount: data.amount,
+                    currency: "USD",
+                    name: "AI-MovieLA",
+                    description: "Upgrade to Pro Plan",
+                    image: "/images/logo.png", // Replace with your actual logo path
+                    order_id: data.order_id,
+                    handler: async function (response) {
+                        // 3. Verify Payment on Backend
+                        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                        
+                        const verifyRes = await fetch('/api/verify-payment', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature
+                            })
+                        });
+
+                        const verifyData = await verifyRes.json();
+
+                        if (verifyData.success) {
+                            alert('Payment Successful! Welcome to Pro.');
+                            window.location.href = '/movie-la';
+                        } else {
+                            alert('Payment verification failed: ' + verifyData.message);
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                        }
+                    },
+                    prefill: {
+                        name: "<%= currentUser.username %>",
+                        email: "<%= currentUser.email || '' %>"
+                    },
+                    theme: {
+                        color: "#6366f1"
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+                
+                rzp.on('payment.failed', function (response) {
+                    alert('Payment Failed: ' + response.error.description);
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+
+            } catch (err) {
+                console.error(err);
+                alert('Error: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
     </script>
