@@ -430,8 +430,8 @@ router.post('/api/create-order', async (req, res) => {
   }
 
   const options = {
-    amount: 999, // amount in the smallest currency unit (9.99 USD * 100)
-    currency: "USD",
+    amount: 89900, // 899.00 INR (in paise)
+    currency: "INR",
     receipt: "receipt_" + req.user._id,
   };
 

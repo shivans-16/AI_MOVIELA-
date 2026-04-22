@@ -1301,3 +1301,77 @@ hr {
 .success-close-btn:hover {
   transform: scale(1.05);
 }
+
+/* --- Home Page Premium Background Animation --- */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: rgba(229, 9, 20, 0.15); /* Theme Red */
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: -1;
+  animation: float 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.blob-1 {
+  top: -10%;
+  left: -10%;
+  background: rgba(229, 9, 20, 0.12);
+  animation-duration: 25s;
+}
+
+.blob-2 {
+  bottom: -10%;
+  right: -10%;
+  background: rgba(99, 102, 241, 0.1); /* Indigo/Purple */
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  top: 40%;
+  left: 30%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 215, 0, 0.05); /* Soft Gold */
+  animation-duration: 22s;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(10vw, 20vh) scale(1.2) rotate(120deg);
+  }
+  66% {
+    transform: translate(-5vw, 15vh) scale(0.8) rotate(240deg);
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(360deg);
+  }
+}
+
+/* Ensure main content stays above and handles transparency well */
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero, .movie-grid, .why-choose-section, .how-it-works-container, .hero-container {
+  position: relative;
+  z-index: 2;
+}
