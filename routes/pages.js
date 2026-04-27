@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Wishlist = require('../models/wishlist');
-const Movie=require("../models/movie");
-const axios=require('axios');
+const Movie = require("../models/movie");
+const axios = require('axios');
 const { getRecommendedMovies } = require('../utils/recommendationEngine');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
@@ -12,6 +12,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+// AI Search Page
 router.get('/ai-search', (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be logged in to make ai search');
@@ -20,7 +21,7 @@ router.get('/ai-search', (req, res) => {
   res.render('ai-search');
 });
 
-// Recommended Movies Page
+// Recommended Movies
 router.get('/recommended', async (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be logged in to view recommendations');
@@ -35,40 +36,12 @@ router.get('/recommended', async (req, res) => {
   }
 });
 
-
-
-// Add to Wishlist
-// router.post('/add-to-wishlist/:id', async (req, res) => {
-//   const movieId = req.params.id;
-
-//   // Assuming you have movie data available (from DB or static array)
-//   const movie = await getMovieById(movieId); // Replace with actual logic
-
-//   const exists = await Wishlist.findOne({ title: movie.title });
-//   if (!exists) {
-//     await Wishlist.create({
-//       title: movie.title,
-//       genre: movie.genre,
-//       releaseYear: movie.year,
-//       description: movie.description,
-//       image: movie.image
-//     });
-//     req.flash('success', 'Added to your wishlist');
-//   } else {
-//     req.flash('success', 'Already in your wishlist');
-//   }
-
-//   res.redirect('/moodboards');
-// });
-
-
-
 // Add to Wishlist
 router.post('/add-to-wishlist/:id', async (req, res) => {
   const movieId = req.params.id;
 
   try {
-    const movie = await Movie.findById(movieId); // ✅ This replaces getMovieById
+    const movie = await Movie.findById(movieId);
 
     if (!movie) {
       req.flash('error', 'Movie not found');
@@ -94,203 +67,31 @@ router.post('/add-to-wishlist/:id', async (req, res) => {
     console.error(err);
     req.flash('error', 'Something went wrong');
     res.redirect('/explore');
-  }
+  }
 });
 
 // Moodboards Page
 router.get('/moodboards', async (req, res) => {
   const wishlist = await Wishlist.find({});
-  res.render('moodboards', { wishlist });
+  res.render('moodboards', { wishlist });
 });
 
-// Delete Wishlist
-
-router.post('/wishlist/remove/:id',async(req,res)=>{
-  const mid=req.params.id;
-  try{
+// Remove from Wishlist
+router.post('/wishlist/remove/:id', async (req, res) => {
+  const mid = req.params.id;
+  try {
     await Wishlist.findByIdAndDelete(mid);
-    req.flash('success','Removed from the Wishlists !!');
+    req.flash('success', 'Removed from the Wishlists !!');
     res.redirect('/moodboards');
   }
-  catch(err)
-  {
+  catch (err) {
     console.error(err);
-    req.flash('error','Could not be removed !!');
+    req.flash('error', 'Could not be removed !!');
     res.redirect("/moodboards");
   }
 });
 
-// ai-results
-
-
-// router.post('/ai-results', async (req, res) => {
-  
-//   const { genre, yearMin, yearMax } = req.body;
-
-// const query = {};
-// if (genre && genre !== 'Genre') query.genre = genre;
-// if (yearMin && yearMax) {
-//   query.year = { $gte: Number(yearMin), $lte: Number(yearMax) };
-// }
-
-//   try {
-//     const movies = await Movie.find(query);
-//     res.render('ai-results', { movies });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Error fetching recommendations');
-//   }
-// });
-
-
-// router.post('/ai-results', async (req, res) => {
-//   const { query, genre, yearMin, yearMax } = req.body;
-//   let dbResults = [];
-//   let externalResults = [];
-
-//   try {
-//     const conditions = [];
-
-//     // 🔍 Natural language query
-//     if (query && query.trim() !== "") {
-//       const q = query.toLowerCase();
-//       conditions.push({
-//         $or: [
-//           { title: { $regex: q, $options: "i" } },
-//           { genre: { $regex: q, $options: "i" } },
-//           { description: { $regex: q, $options: "i" } }
-//         ]
-//       });
-//     }
-
-//     // 🎯 Genre filter
-//     if (genre && genre !== "Genre (optional)") {
-//       conditions.push({ genre });
-//     }
-
-//     // 📅 Year range filter
-//     if (yearMin && yearMax) {
-//       conditions.push({ year: { $gte: Number(yearMin), $lte: Number(yearMax) } });
-//     }
-
-//     // ✅ Smart query: combine with $and
-//     if (conditions.length > 0) {
-//       dbResults = await Movie.find({ $and: conditions });
-//     }
-
-//     // 🌐 External API fallback
-//     if (dbResults.length === 0 && query) {
-//       const axios = require('axios');
-//       const apiRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&s=${query}`);
-//       if (apiRes.data.Search) {
-//         externalResults = apiRes.data.Search.map(m => ({
-//           title: m.Title,
-//           year: m.Year,
-//           genre: "Unknown",
-//           image: m.Poster,
-//           description: "Fetched from OMDb",
-//           source: "external"
-//         }));
-//       }
-//     }
-
-//     res.render('ai-results', { movies: [...dbResults, ...externalResults] });
-//   } catch (err) {
-//     console.error("Search error:", err);
-//     res.status(500).send("Error fetching recommendations");
-//   }
-// });
-
-/*
-
-router.post('/ai-results', async (req, res) => {
-  const { query, genre, yearMin, yearMax } = req.body;
-  let dbResults = [];
-  let externalResults = [];
-
-  try {
-    const conditions = [];
-
-    // 🔍 Natural language query
-    if (query && query.trim() !== "") {
-      const q = query.toLowerCase();
-      conditions.push({
-        $or: [
-          { title: { $regex: q, $options: "i" } },
-          { genre: { $regex: q, $options: "i" } },
-          { description: { $regex: q, $options: "i" } }
-        ]
-      });
-    }
-
-    // 🎯 Genre filter
-    if (genre && genre !== "Genre (optional)") {
-      conditions.push({ genre });
-    }
-
-    // 📅 Year range filter
-    if (yearMin && yearMax) {
-      conditions.push({ year: { $gte: Number(yearMin), $lte: Number(yearMax) } });
-    }
-
-    // ✅ Combine filters
-    if (conditions.length > 0) {
-      dbResults = await Movie.find({ $and: conditions });
-    }
-
-    // 🌐 External API fallback
-    if (dbResults.length === 0 && query) {
-      try {
-        // First try general search
-        const apiRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&s=${encodeURIComponent(query)}`);
-        if (apiRes.data.Search) {
-          externalResults = apiRes.data.Search.map(m => ({
-            title: m.Title,
-            year: m.Year,
-            genre: "Unknown",
-            image: m.Poster !== "N/A" ? m.Poster : "/images/default.jpg",
-            description: "Fetched from OMDb",
-            source: "external"
-          }));
-        } else {
-          // Try exact title match
-          const exactRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&t=${encodeURIComponent(query)}`);
-          if (exactRes.data && exactRes.data.Title) {
-            externalResults.push({
-              title: exactRes.data.Title,
-              year: exactRes.data.Year,
-              genre: exactRes.data.Genre || "Unknown",
-              image: exactRes.data.Poster !== "N/A" ? exactRes.data.Poster : "/images/default.jpg",
-              description: exactRes.data.Plot || "Fetched from OMDb",
-              source: "external"
-            });
-          }
-        }
-      } catch (apiErr) {
-        console.error("OMDb API error:", apiErr.message);
-      }
-    }
-
-    // 🖼️ Render results
-    res.render('ai-results', { movies: [...dbResults, ...externalResults] });
-  } catch (err) {
-    console.error("Search error:", err);
-    res.status(500).send("Error fetching recommendations");
-  }
-});
-
-
-*/
-/*
-
-
-const express = require('express');
-const router = express.Router();
-const axios = require('axios');
-const Movie = require('../models/Movie'); // Adjust path if needed
-*/
-
-// 🧠 Natural Language Extractor
+// Natural Language Extractor
 function extractFiltersFromQuery(query) {
   const genreList = [
     "action", "romance", "horror", "sci-fi", "comedy", "biography",
@@ -299,10 +100,10 @@ function extractFiltersFromQuery(query) {
 
   const lowerQuery = query.toLowerCase();
 
-  // 🎯 Genre detection
+  // Detect genre
   const detectedGenre = genreList.find(g => lowerQuery.includes(g));
 
-  // 📅 Year detection
+  // Detect year
   const yearMatches = lowerQuery.match(/\b(19|20)\d{2}s?\b/g);
   let yearMin = null;
   let yearMax = null;
@@ -315,7 +116,7 @@ function extractFiltersFromQuery(query) {
     yearMax = maxYear + 9;
   }
 
-  // 🔍 Cleaned keyword query for OMDb
+  // Clean keyword query
   const keywordQuery = lowerQuery
     .replace(/[^a-z0-9\s]/gi, '')
     .split(' ')
@@ -326,7 +127,7 @@ function extractFiltersFromQuery(query) {
   return { detectedGenre, yearMin, yearMax, keywordQuery };
 }
 
-// 🚀 AI Results Route
+// AI Results Route
 router.post('/ai-results', async (req, res) => {
   const { query, genre, yearMin, yearMax } = req.body;
   let dbResults = [];
@@ -335,14 +136,14 @@ router.post('/ai-results', async (req, res) => {
   try {
     const conditions = [];
 
-    // 🧠 Extract filters from natural query
+    // Extract filters
     const extracted = extractFiltersFromQuery(query || "");
     const autoGenre = genre && genre !== "Genre (optional)" ? genre : extracted.detectedGenre;
     const autoYearMin = yearMin || extracted.yearMin;
     const autoYearMax = yearMax || extracted.yearMax;
     const keywordQuery = extracted.keywordQuery;
 
-    // 🔍 Natural language DB search
+    // Search database
     if (query && query.trim() !== "") {
       const q = query.toLowerCase();
       conditions.push({
@@ -354,22 +155,22 @@ router.post('/ai-results', async (req, res) => {
       });
     }
 
-    // 🎯 Genre filter
+    // Genre filter
     if (autoGenre) {
       conditions.push({ genre: new RegExp(autoGenre, "i") });
     }
 
-    // 📅 Year range filter
+    // Year range
     if (autoYearMin && autoYearMax) {
       conditions.push({ year: { $gte: Number(autoYearMin), $lte: Number(autoYearMax) } });
     }
 
-    // ✅ DB query
+    // Run query
     if (conditions.length > 0) {
       dbResults = await Movie.find({ $and: conditions });
     }
 
-    // 🌐 OMDb fallback if no DB results
+    // OMDb fallback
     if (dbResults.length === 0 && keywordQuery) {
       try {
         const apiRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&s=${encodeURIComponent(keywordQuery)}`);
@@ -400,7 +201,6 @@ router.post('/ai-results', async (req, res) => {
       }
     }
 
-    // 🖼️ Render results
     res.render('ai-results', { movies: [...dbResults, ...externalResults] });
   } catch (err) {
     console.error("Search error:", err);
@@ -408,13 +208,12 @@ router.post('/ai-results', async (req, res) => {
   }
 });
 
-
-// Upgrade to Pro Page
+// Upgrade to Pro
 router.get('/upgrade', (req, res) => {
   res.render('upgrade');
 });
 
-// Payment Page [NEW]
+// Payment Page
 router.get('/payment', (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be logged in to access payment');
@@ -423,14 +222,14 @@ router.get('/payment', (req, res) => {
   res.render('payment');
 });
 
-// Create Razorpay Order API
+// Create Razorpay Order
 router.post('/api/create-order', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
   }
 
   const options = {
-    amount: 89900, // 899.00 INR (in paise)
+    amount: 89900,
     currency: "INR",
     receipt: "receipt_" + req.user._id,
   };
@@ -449,7 +248,7 @@ router.post('/api/create-order', async (req, res) => {
   }
 });
 
-// Verify Razorpay Payment API
+// Verify Razorpay Payment
 router.post('/api/verify-payment', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -462,11 +261,9 @@ router.post('/api/verify-payment', async (req, res) => {
   const generated_signature = hmac.digest('hex');
 
   if (generated_signature === razorpay_signature) {
-    // Payment is verified
     try {
-      // Update User status in DB
       const User = require('../models/user');
-      await User.findByIdAndUpdate(req.user._id, { isPro: true }); // Assuming isPro field exists or you'll add it
+      await User.findByIdAndUpdate(req.user._id, { isPro: true });
       
       console.log('Payment Verified for user:', req.user.username);
       res.json({ success: true, message: "Payment verified successfully" });

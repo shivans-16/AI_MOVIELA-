@@ -113,9 +113,9 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (!data.success) {
                     throw new Error(data.message || 'Failed to create order');
                 }
@@ -132,7 +132,7 @@
                     handler: async function (response) {
                         // 3. Verify Payment on Backend
                         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-                        
+
                         const verifyRes = await fetch('/api/verify-payment', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -163,9 +163,13 @@
                     }
                 };
 
+
+
+
+
                 const rzp = new Razorpay(options);
                 rzp.open();
-                
+
                 rzp.on('payment.failed', function (response) {
                     alert('Payment Failed: ' + response.error.description);
                     btn.disabled = false;

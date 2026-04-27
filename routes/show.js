@@ -11,7 +11,7 @@ router.get('/movie-la/show/:id', async (req, res) => {
       return res.status(404).send('Movie not found');
     }
 
-    // Fetch extra data from OMDb for Ratings and IMDb ID
+    // Fetch OMDb data
     let externalData = {
       imdbID: null,
       ratings: [],
@@ -33,7 +33,7 @@ router.get('/movie-la/show/:id', async (req, res) => {
       console.error("⚠️ OMDb API error (non-critical):", apiErr.message);
     }
 
-    // Construct IMDb URL
+    // IMDb URL
     const imdbUrl = externalData.imdbID ? `https://www.imdb.com/title/${externalData.imdbID}/` : `https://www.imdb.com/find?q=${encodeURIComponent(movie.title)}`;
 
     res.render('show.ejs', { movie, externalData, imdbUrl });
@@ -43,7 +43,7 @@ router.get('/movie-la/show/:id', async (req, res) => {
   }
 });
 
-// Full Details Page Route
+// Details Route
 router.get('/movie-la/details/:id', async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
@@ -55,7 +55,7 @@ router.get('/movie-la/details/:id', async (req, res) => {
     
     try {
       const apiKey = "a72e8af8";
-      // Fetching with plot=full for detailed description
+      // Fetch full plot
       const omdbRes = await axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(movie.title)}&y=${movie.year}&plot=full`);
       
       if (omdbRes.data && omdbRes.data.Response === "True") {

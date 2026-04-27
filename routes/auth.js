@@ -4,31 +4,9 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-
 router.get('/signup', (req, res) => {
   res.render('signup', { title: 'Sign Up' });
 });
-
-// router.post('/signup', async (req, res) => {
-//   const { username, email, password } = req.body;
-//   try {
-//     const existing = await User.findOne({ username });
-//     if (existing) {
-//       // req.flash('error', 'Username already exists');
-//       console.log("User already exists");
-//       return res.redirect('/movie-la');
-//     }
-
-//     const hashed = await bcrypt.hash(password, 10);
-//     await User.create({ username, email, password: hashed });
-//     // req.flash('success', 'User registered successfully');
-//     console.log("User registered successfully..");
-//     res.redirect('/login');
-//   } catch (err) {
-//     // req.flash('error', 'Signup failed. Try again.');
-//     res.redirect('/signup');
-//   }
-// });
 
 router.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
@@ -49,29 +27,9 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-
 router.get('/login', (req, res) => {
   res.render('login', { title: 'Login' });
 });
-
-// router.post('/login', passport.authenticate('local', {
-//   successRedirect: '/movie-la',
-//   failureRedirect: '/login',
-  
-// }));
-
-// router.post('/login',(req,res,next)=>{
-//   passport.authenticate('local',(err,user)=>{
-//     if(err) return next(err);
-//     if(!user) return res.redirect('/login');
-
-//     req.login(user,(err)=>{
-//       if(err) return next(err);
-//       console.log("login successfull..");
-//       return res.redirect('/movie-la');
-//     });
-//   })(req,res,next);
-// });
 
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
@@ -89,7 +47,6 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-
 router.get('/myaccount', (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be logged in to view your account');
@@ -106,16 +63,13 @@ router.get('/logout', (req, res) => {
   });
 });
 
-
 router.get('/about', (req, res) => {
   res.render('about.ejs', { title: 'About AI-MovieLA' });
 });
 
-
 router.get('/privacy', (req, res) => {
   res.render('privacy');
 });
-
 
 router.get('/contact', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -132,11 +86,8 @@ router.post('/contact', (req, res) => {
   }
   const { name, email, message } = req.body;
 
-  // You can store or email this data here if needed
-
   req.flash('success', 'We will get in contact with you very soon.');
   res.redirect('/movie-la');
 });
-
 
 module.exports = router;

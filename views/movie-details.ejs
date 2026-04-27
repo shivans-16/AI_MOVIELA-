@@ -195,10 +195,10 @@
 <div class="details-wrapper">
   
   <div class="details-card">
-    <!-- Close Button -->
+    <!-- Close -->
     <a href="/movie-la/show/<%= movie._id %>" class="close-btn">&times;</a>
 
-    <!-- Left: Poster & Basic Meta -->
+    <!-- Poster Info -->
     <div class="details-left">
       <img src="<%= movie.Poster || movie.image %>" alt="<%= movie.Title %> Poster">
       <div class="info-section" style="width: 100%;">
@@ -211,7 +211,7 @@
       </div>
     </div>
 
-    <!-- Right: Detailed Content -->
+    <!-- Detail Content -->
     <div class="details-right">
       <h1 class="movie-title"><%= movie.Title || movie.title %></h1>
       

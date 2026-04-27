@@ -42,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//Middleware 
+// Middleware 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
