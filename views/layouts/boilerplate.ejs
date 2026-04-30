@@ -52,7 +52,7 @@
      </script>
 
      <script>
-      // AI Assistant Logic
+      // AI Assistant logic
       function toggleAssistant() {
         const body = document.getElementById('ai-assistant-body');
         const icon = document.getElementById('ai-toggle-icon');
@@ -154,14 +154,9 @@
 
       .ai-assistant-body {
         padding: 20px;
-        height: 450px;
+        max-height: 250px;
         overflow-y: auto;
-        display: none;
-      }
-
-      .ai-assistant-body.active {
         display: block;
-        animation: slideUp 0.3s ease forwards;
       }
 
       .ai-desc {
@@ -279,15 +274,13 @@
           <i class="fas fa-lock" style="color: #ff4da6;"></i>
         </div>
       <% } else { %>
-        <div class="ai-assistant-header" onclick="toggleAssistant()">
+        <div class="ai-assistant-header">
           <i class="fas fa-robot"></i> 
           <span class="ai-title">AI-Assistant</span>
-          <i class="fas fa-chevron-up" id="ai-toggle-icon"></i>
         </div>
         <div class="ai-assistant-body" id="ai-assistant-body">
-          <p class="ai-desc">Your personal movie assistant</p>
           <div class="ai-search-box">
-            <input type="text" id="ai-search-input" placeholder="Search a movie..." onkeypress="handleAiSearch(event)">
+            <input type="text" id="ai-search-input" placeholder="Here to help You !!" onkeypress="handleAiSearch(event)">
             <button onclick="performAiSearch()"><i class="fas fa-search"></i></button>
           </div>
           <div id="ai-results" class="ai-results"></div>

@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const apiKey = "a72e8af8";
 
-// Helper function to fetch movies from OMDb
+// OMDb API se movies fetch karne ka helper function
 async function fetchMovies(imdbIds) {
   try {
     const promises = imdbIds.map(id => axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&i=${id}`));
@@ -29,7 +29,7 @@ router.get('/explore', async (req, res) => {
     return res.redirect('/login');
   }
 
-  // Predefined IMDb IDs for categories
+  // Categories ke liye predefined IMDb IDs
   const superHeroIds = ['tt0468569', 'tt4154796', 'tt0371746', 'tt1877830', 'tt10872600', 'tt3896198', 'tt1160419', 'tt1825683'];
   const mafiaIds = ['tt0068646', 'tt0099685', 'tt0086250', 'tt0071562', 'tt0119008', 'tt1302006', 'tt0112641', 'tt0087843'];
   const romanceIds = ['tt3783958', 'tt2674426', 'tt0332280', 'tt0120338', 'tt0414387', 'tt2582846', 'tt0422295', 'tt1981115'];

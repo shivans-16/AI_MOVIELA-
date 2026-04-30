@@ -43,7 +43,7 @@ router.get('/movie-la/show/:id', async (req, res) => {
   }
 });
 
-// Import from OMDb Route
+// OMDb API se movie import karne ka route
 router.get('/movie-la/import-omdb/:imdbid', async (req, res) => {
   try {
     const imdbID = req.params.imdbid;
@@ -57,19 +57,18 @@ router.get('/movie-la/import-omdb/:imdbid', async (req, res) => {
 
     const { Title, Year, Poster, Genre } = omdbRes.data;
     
-    // Parse Year
     const parsedYear = parseInt(Year) || new Date().getFullYear();
     
-    // Check if movie already exists
+    // Check karein ki movie pehle se database mein hai ya nahi
     let movie = await Movie.findOne({ title: Title, year: parsedYear });
     
     if (movie) {
       return res.redirect(`/movie-la/show/${movie._id}`);
     }
 
-    // Map OMDb Genre to closest valid enum
+    // OMDb genre ko valid genre mein map karein
     const validGenres = ['Action', 'Romance', 'Horror', 'Sci-Fi', 'Comedy','Biography', 'Thriller', 'Adventure','Drama', 'Animation','Crime', 'Fantasy', 'Documentary'];
-    let mappedGenre = 'Drama'; // fallback
+    let mappedGenre = 'Drama';
     if (Genre && Genre !== "N/A") {
       const omdbGenres = Genre.split(',').map(g => g.trim());
       for (let g of omdbGenres) {
@@ -80,7 +79,7 @@ router.get('/movie-la/import-omdb/:imdbid', async (req, res) => {
       }
     }
 
-    // Create new movie
+    // Nayi movie database me save karein
     movie = await Movie.create({
       title: Title,
       genre: mappedGenre,
@@ -95,7 +94,7 @@ router.get('/movie-la/import-omdb/:imdbid', async (req, res) => {
   }
 });
 
-// Details Route
+// Movie details dikhane ka route
 router.get('/movie-la/details/:id', async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);

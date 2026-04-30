@@ -29,7 +29,7 @@ router.get('/trending', async (req, res) => {
     return res.redirect('/login');
   }
 
-  // Define popular movie IDs
+  // Popular movies ke IDs define karein
   const bollywoodIds = ['tt12844910', 'tt15354916', 'tt13751694', 'tt5074352', 'tt1187043', 'tt2338151', 'tt15327088', 'tt8178634'];
   const hollywoodIds = ['tt15239678', 'tt15398776', 'tt1517268', 'tt9362722', 'tt1877830', 'tt1745960', 'tt10872600', 'tt1160419'];
   const southIds = ['tt8178634', 'tt10698680', 'tt9389998', 'tt4849438', 'tt15327088', 'tt9179430', 'tt10189314', 'tt8978646'];
