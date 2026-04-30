@@ -154,7 +154,7 @@
 
       .ai-assistant-body {
         padding: 20px;
-        max-height: 400px;
+        height: 450px;
         overflow-y: auto;
         display: none;
       }
@@ -272,19 +272,27 @@
 
      <!-- AI Assistant Widget -->
      <div class="ai-assistant-widget">
-      <div class="ai-assistant-header" onclick="toggleAssistant()">
-        <i class="fas fa-robot"></i> 
-        <span class="ai-title">AI-Assistant</span>
-        <i class="fas fa-chevron-up" id="ai-toggle-icon"></i>
-      </div>
-      <div class="ai-assistant-body" id="ai-assistant-body">
-        <p class="ai-desc">Your personal movie assistant</p>
-        <div class="ai-search-box">
-          <input type="text" id="ai-search-input" placeholder="Search a movie..." onkeypress="handleAiSearch(event)">
-          <button onclick="performAiSearch()"><i class="fas fa-search"></i></button>
+      <% if (!currentUser) { %>
+        <div class="ai-assistant-header" onclick="window.location.href='/login'" style="cursor: pointer;" title="Login to use AI-Assistant">
+          <i class="fas fa-robot"></i> 
+          <span class="ai-title">AI-Assistant</span>
+          <i class="fas fa-lock" style="color: #ff4da6;"></i>
         </div>
-        <div id="ai-results" class="ai-results"></div>
-      </div>
+      <% } else { %>
+        <div class="ai-assistant-header" onclick="toggleAssistant()">
+          <i class="fas fa-robot"></i> 
+          <span class="ai-title">AI-Assistant</span>
+          <i class="fas fa-chevron-up" id="ai-toggle-icon"></i>
+        </div>
+        <div class="ai-assistant-body" id="ai-assistant-body">
+          <p class="ai-desc">Your personal movie assistant</p>
+          <div class="ai-search-box">
+            <input type="text" id="ai-search-input" placeholder="Search a movie..." onkeypress="handleAiSearch(event)">
+            <button onclick="performAiSearch()"><i class="fas fa-search"></i></button>
+          </div>
+          <div id="ai-results" class="ai-results"></div>
+        </div>
+      <% } %>
     </div>
 </body>
 </html>
