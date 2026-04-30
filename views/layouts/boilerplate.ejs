@@ -50,5 +50,241 @@
          });
        });
      </script>
+
+     <script>
+      // AI Assistant Logic
+      function toggleAssistant() {
+        const body = document.getElementById('ai-assistant-body');
+        const icon = document.getElementById('ai-toggle-icon');
+        if (body.classList.contains('active')) {
+          body.classList.remove('active');
+          icon.classList.remove('fa-chevron-down');
+          icon.classList.add('fa-chevron-up');
+        } else {
+          body.classList.add('active');
+          icon.classList.remove('fa-chevron-up');
+          icon.classList.add('fa-chevron-down');
+        }
+      }
+
+      function handleAiSearch(e) {
+        if (e.key === 'Enter') performAiSearch();
+      }
+
+      async function performAiSearch() {
+        const query = document.getElementById('ai-search-input').value.trim();
+        const resultsContainer = document.getElementById('ai-results');
+        
+        if (!query) return;
+
+        resultsContainer.innerHTML = '<p style="text-align:center; font-size:0.9rem; color:#b084f9;"><i class="fas fa-spinner fa-spin"></i> Fetching movies...</p>';
+
+        try {
+          const res = await fetch(`https://www.omdbapi.com/?apikey=a72e8af8&s=${encodeURIComponent(query)}`);
+          const data = await res.json();
+
+          if (data.Response === "True") {
+            const movies = data.Search.slice(0, 3); // Get top 3
+            resultsContainer.innerHTML = '';
+            
+            movies.forEach(m => {
+              const poster = m.Poster !== "N/A" ? m.Poster : "https://via.placeholder.com/50x75/1a1a1a/e50914?text=No+Img";
+              const cardHtml = `
+                <a href="/movie-la/import-omdb/${m.imdbID}" class="ai-movie-card">
+                  <img src="${poster}" alt="Poster">
+                  <div class="ai-movie-info">
+                    <h4>${m.Title}</h4>
+                    <p>${m.Year}</p>
+                  </div>
+                </a>
+              `;
+              resultsContainer.innerHTML += cardHtml;
+            });
+          } else {
+            resultsContainer.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:#ff4da6;">No movies found. Try another prompt!</p>`;
+          }
+        } catch (err) {
+          resultsContainer.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:red;">Connection error.</p>`;
+        }
+      }
+     </script>
+
+     <style>
+      .ai-assistant-widget {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 320px;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        color: white;
+      }
+
+      .ai-assistant-header {
+        padding: 15px 20px;
+        background: linear-gradient(135deg, rgba(255, 77, 166, 0.15), rgba(77, 166, 255, 0.15));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .ai-assistant-header .fa-robot {
+        font-size: 1.3rem;
+        color: #ffcc70;
+        margin-right: 12px;
+      }
+
+      .ai-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        flex-grow: 1;
+        letter-spacing: 0.5px;
+      }
+
+      .ai-assistant-body {
+        padding: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+        display: none;
+      }
+
+      .ai-assistant-body.active {
+        display: block;
+        animation: slideUp 0.3s ease forwards;
+      }
+
+      .ai-desc {
+        font-size: 0.85rem;
+        color: #b3b3b3;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-align: center;
+        font-style: italic;
+      }
+
+      .ai-search-box {
+        display: flex;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: border 0.3s ease;
+      }
+
+      .ai-search-box:focus-within {
+        border-color: #ff4da6;
+      }
+
+      .ai-search-box input {
+        flex-grow: 1;
+        background: transparent;
+        border: none;
+        padding: 12px 15px;
+        color: white;
+        outline: none;
+        font-size: 0.95rem;
+      }
+
+      .ai-search-box input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .ai-search-box button {
+        background: transparent;
+        border: none;
+        color: #b084f9;
+        padding: 0 15px;
+        cursor: pointer;
+        transition: color 0.3s, transform 0.2s;
+      }
+
+      .ai-search-box button:hover {
+        color: #ffcc70;
+        transform: scale(1.1);
+      }
+
+      .ai-results {
+        margin-top: 15px;
+      }
+
+      .ai-movie-card {
+        display: flex;
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 10px;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      .ai-movie-card:hover {
+        background: rgba(255,255,255,0.12);
+        transform: translateY(-2px);
+      }
+
+      .ai-movie-card img {
+        width: 45px;
+        height: 65px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-right: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      }
+
+      .ai-movie-info h4 {
+        margin: 0 0 5px 0;
+        font-size: 0.95rem;
+        color: #fff;
+      }
+
+      .ai-movie-info p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #ffcc70;
+      }
+
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .ai-assistant-body::-webkit-scrollbar {
+        width: 5px;
+      }
+      .ai-assistant-body::-webkit-scrollbar-thumb {
+        background: #b084f9;
+        border-radius: 5px;
+      }
+     </style>
+
+     <!-- AI Assistant Widget -->
+     <div class="ai-assistant-widget">
+      <div class="ai-assistant-header" onclick="toggleAssistant()">
+        <i class="fas fa-robot"></i> 
+        <span class="ai-title">AI-Assistant</span>
+        <i class="fas fa-chevron-up" id="ai-toggle-icon"></i>
+      </div>
+      <div class="ai-assistant-body" id="ai-assistant-body">
+        <p class="ai-desc">Your personal movie assistant</p>
+        <div class="ai-search-box">
+          <input type="text" id="ai-search-input" placeholder="Search a movie..." onkeypress="handleAiSearch(event)">
+          <button onclick="performAiSearch()"><i class="fas fa-search"></i></button>
+        </div>
+        <div id="ai-results" class="ai-results"></div>
+      </div>
+    </div>
 </body>
 </html>
