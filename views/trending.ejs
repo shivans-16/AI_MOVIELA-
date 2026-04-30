@@ -116,72 +116,71 @@
 </style>
 
 <div class="trending-container">
-  <!-- Section: Upcoming Movies -->
+  <!-- Section: Latest Bollywood -->
   <div class="section">
-    <h2 class="section-title">Upcoming Movies</h2>
+    <h2 class="section-title">Latest Bollywood</h2>
     <div class="scroll-row">
-      <% upcoming.forEach(movie => { %>
-        <div class="movie-card">
+      <% bollywood.forEach(movie => { %>
+        <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
           <div class="date-badge"><%= movie.date %></div>
           <img src="<%= movie.image %>" alt="<%= movie.title %>">
           <div class="card-info">
             <h3><%= movie.title %></h3>
             <p><%= movie.releaseYear %></p>
           </div>
-        </div>
+        </a>
       <% }) %>
     </div>
   </div>
 
-  <!-- Section: Latest Releases -->
+  <!-- Section: Trending Hollywood -->
   <div class="section">
-    <h2 class="section-title">Latest Releases</h2>
+    <h2 class="section-title">Trending Hollywood</h2>
     <div class="scroll-row">
-      <% latest.forEach(movie => { %>
-        <div class="movie-card">
+      <% hollywood.forEach(movie => { %>
+        <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
           <div class="date-badge"><%= movie.date %></div>
           <img src="<%= movie.image %>" alt="<%= movie.title %>">
           <div class="card-info">
             <h3><%= movie.title %></h3>
             <p><%= movie.releaseYear %></p>
           </div>
-        </div>
+        </a>
       <% }) %>
     </div>
   </div>
 
-  <!-- Section: Top Watched -->
+  <!-- Section: South Indian Blockbusters -->
   <div class="section">
-    <h2 class="section-title">Top Watched</h2>
+    <h2 class="section-title">South Indian Blockbusters</h2>
     <div class="scroll-row">
-      <% topWatched.forEach(movie => { %>
-        <div class="movie-card">
+      <% south.forEach(movie => { %>
+        <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
           <div class="date-badge"><%= movie.date %></div>
           <img src="<%= movie.image %>" alt="<%= movie.title %>">
           <div class="card-info">
             <h3><%= movie.title %></h3>
             <p><%= movie.releaseYear %></p>
           </div>
-        </div>
+        </a>
       <% }) %>
     </div>
   </div>
 
-  <!-- Section: Recently Added -->
+  <!-- Section: Korean Dramas -->
   <div class="section">
-    <h2 class="section-title">Recently Added</h2>
+    <h2 class="section-title">Korean Dramas</h2>
     <div class="scroll-row">
-      <% recent.forEach(movie => { %>
-        <div class="movie-card">
+      <% korean.forEach(movie => { %>
+        <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
           <div class="date-badge"><%= movie.date %></div>
           <img src="<%= movie.image %>" alt="<%= movie.title %>">
           <div class="card-info">
             <h3><%= movie.title %></h3>
             <p><%= movie.releaseYear %></p>
           </div>
-        </div>
+        </a>
       <% }) %>
     </div>
   </div>
 </div>
-

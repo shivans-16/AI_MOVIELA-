@@ -120,13 +120,13 @@ body {
 
   <div class="scroll-row">
     <% superheroes.forEach(movie => { %>
-      <div class="movie-card">
+      <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
       <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
         <div class="card-info">
           <h3><%= movie.title %></h3>
           <p><%= movie.releaseYear %></p>
         </div>
-      </div>
+      </a>
      
     <% }) %>
   </div>
@@ -140,13 +140,13 @@ body {
 
   <div class="scroll-row">
     <% mafias.forEach(movie => { %>
-      <div class="movie-card">
+      <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
         <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
         <div class="card-info">
           <h3><%= movie.title %></h3>
           <p><%= movie.releaseYear %></p>
         </div>
-      </div>
+      </a>
     <% }) %>
   </div>
 </div>
@@ -158,13 +158,13 @@ body {
 
   <div class="scroll-row">
     <% romance.forEach(movie => { %>
-      <div class="movie-card">
+      <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
         <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
         <div class="card-info">
           <h3><%= movie.title %></h3>
           <p><%= movie.releaseYear %></p>
         </div>
-      </div>
+      </a>
     <% }) %>
   </div>
 </div>
@@ -176,13 +176,13 @@ body {
 
   <div class="scroll-row">
     <% bollywood.forEach(movie => { %>
-      <div class="movie-card">
+      <a href="/movie-la/import-omdb/<%= movie.imdbID %>" class="movie-card" style="text-decoration: none; color: inherit;">
         <img src="<%= movie.image %>" alt="<%= movie.title %> Poster" />
         <div class="card-info">
           <h3><%= movie.title %></h3>
           <p><%= movie.releaseYear %></p>
         </div>
-      </div>
+      </a>
     <% }) %>
   </div>
 </div>

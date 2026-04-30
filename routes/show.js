@@ -43,6 +43,58 @@ router.get('/movie-la/show/:id', async (req, res) => {
   }
 });
 
+// Import from OMDb Route
+router.get('/movie-la/import-omdb/:imdbid', async (req, res) => {
+  try {
+    const imdbID = req.params.imdbid;
+    const apiKey = "a72e8af8";
+    
+    const omdbRes = await axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`);
+    if (!omdbRes.data || omdbRes.data.Response === "False") {
+      // If req.flash is available use it, else just redirect
+      return res.redirect('back');
+    }
+
+    const { Title, Year, Poster, Genre } = omdbRes.data;
+    
+    // Parse Year
+    const parsedYear = parseInt(Year) || new Date().getFullYear();
+    
+    // Check if movie already exists
+    let movie = await Movie.findOne({ title: Title, year: parsedYear });
+    
+    if (movie) {
+      return res.redirect(`/movie-la/show/${movie._id}`);
+    }
+
+    // Map OMDb Genre to closest valid enum
+    const validGenres = ['Action', 'Romance', 'Horror', 'Sci-Fi', 'Comedy','Biography', 'Thriller', 'Adventure','Drama', 'Animation','Crime', 'Fantasy', 'Documentary'];
+    let mappedGenre = 'Drama'; // fallback
+    if (Genre && Genre !== "N/A") {
+      const omdbGenres = Genre.split(',').map(g => g.trim());
+      for (let g of omdbGenres) {
+        if (validGenres.includes(g)) {
+          mappedGenre = g;
+          break;
+        }
+      }
+    }
+
+    // Create new movie
+    movie = await Movie.create({
+      title: Title,
+      genre: mappedGenre,
+      year: parsedYear,
+      image: Poster && Poster !== "N/A" ? Poster : "/images/default.jpg"
+    });
+
+    res.redirect(`/movie-la/show/${movie._id}`);
+  } catch (err) {
+    console.error("❌ Error importing OMDb movie:", err.message);
+    res.redirect('back');
+  }
+});
+
 // Details Route
 router.get('/movie-la/details/:id', async (req, res) => {
   try {
