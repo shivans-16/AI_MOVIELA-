@@ -1,13 +1,10 @@
-<% layout("/layouts/boilerplate") %> 
+<% layout("/layouts/boilerplate") %>
 
 
 
-<style>
-  
- 
-    
-  /* background-color: #0f0c29; */
-  /* font-family: 'Segoe UI', sans-serif;
+  <style>
+    /* background-color: #0f0c29; */
+    /* font-family: 'Segoe UI', sans-serif;
   color: white;
   margin: 0;
   padding: 0;
@@ -36,7 +33,7 @@
 .filter-box {
       background: rgb(30, 41, 59);
   /* background-color: #1e1e2f; */
-/*  padding: 30px;
+    /*  padding: 30px;
   border-radius: 16px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
@@ -102,174 +99,172 @@
   background-color: #e63c91;
 } */
 
-body {
-  /* background: rgb(15, 23, 42); */
-  /* background: linear-gradient(to right, #0f2027, #203a43, #2c5364); */
-  background: rgb(11, 16, 28) ;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
-  color: white;
-}
+    body {
+      /* background: rgb(15, 23, 42); */
+      /* background: linear-gradient(to right, #0f2027, #203a43, #2c5364); */
+      background: rgb(11, 16, 28);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: white;
+    }
 
-.ai-search-container {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 40px;
-   background: rgb(30, 41, 59);
-  /* background: rgba(255, 255, 255, 0.06); */
-  backdrop-filter: blur(14px);
-  border-radius: 10px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-  text-align: center;
-}
+    .ai-search-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: rgb(30, 41, 59);
+      /* background: rgba(255, 255, 255, 0.06); */
+      backdrop-filter: blur(14px);
+      border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
 
-/* Glowing Heading */
-.main-heading {
-  font-size: 2.8rem;
-  /* color: #ffcc70; */
-  color: white;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-}
+    /* Glowing Heading */
+    .main-heading {
+      font-size: 2.8rem;
+      /* color: #ffcc70; */
+      color: white;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
 
-/* Subheading */
-.subheading {
-  font-size: 1.1rem;
-  color: #ccc;
-  margin-bottom: 30px;
-}
+    /* Subheading */
+    .subheading {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
 
-/* Form Styling */
-.filter-box {
-  
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
+    /* Form Styling */
+    .filter-box {
 
-/* Search Input */
-.search-input {
-  width: 100%;
-  padding: 14px 20px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  /* color: white; */
-  color: gray;;
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.1);
-}
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
 
-/* Dropdown */
-.filter-dropdown {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  /* color: white; */
-  
-  color:gray;
-}
+    /* Search Input */
+    .search-input {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      /* color: white; */
+      color: gray;
+      ;
+      backdrop-filter: blur(6px);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.1);
+    }
 
-/* Slider Group */
-.slider-group {
-  width: 100%;
-  text-align: left;
-  color: #ccc;
-}
+    /* Dropdown */
+    .filter-dropdown {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      /* color: white; */
 
-.slider-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
+      color: gray;
+    }
 
-.slider-group input[type="range"] {
-  width: 100%;
-  margin-bottom: 6px;
-}
+    /* Slider Group */
+    .slider-group {
+      width: 100%;
+      text-align: left;
+      color: #ccc;
+    }
 
-.slider-labels {
-  font-size: 0.95rem;
-  color: #aaa;
-  
-}
+    .slider-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
 
-/* Search Button */
-.search-btn-container {
-  margin-top: 20px;
-}
+    .slider-group input[type="range"] {
+      width: 100%;
+      margin-bottom: 6px;
+    }
 
-.search-btn {
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 14px;
-  border: none;
-  background: linear-gradient(to right, #ffcc70, #ff8c42);
-  color: #1a1a1a;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 204, 112, 0.4);
-  transition: transform 0.2s ease;
-}
+    .slider-labels {
+      font-size: 0.95rem;
+      color: #aaa;
 
-.search-btn:hover {
-  transform: scale(1.05);
-}
+    }
 
+    /* Search Button */
+    .search-btn-container {
+      margin-top: 20px;
+    }
 
+    .search-btn {
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(to right, #ffcc70, #ff8c42);
+      color: #1a1a1a;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 204, 112, 0.4);
+      transition: transform 0.2s ease;
+    }
 
-</style>
+    .search-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
 
 
 
 
-<div class="ai-search-container">
-  <h1 class="main-heading">Find Your Next Favorite Movie</h1>
-  <p class="subheading">
-    Type anything like “romantic movies from 2010s” or use filters below. Your choice.
-  </p>
+  <div class="ai-search-container">
+    <h1 class="main-heading">Find Your Next Favorite Movie</h1>
+    <p class="subheading">
+      Type anything like “romantic movies from 2010s” or use filters below. Your choice.
+    </p>
 
-  <form action="/ai-results" method="POST" class="filter-box">
-    <!-- Natural Language Search -->
-    <input type="text" name="query" class="search-input" placeholder="Search by title, genre, mood, actor...">
-   
+    <form action="/ai-results" method="POST" class="filter-box">
+      <!-- Natural Language Search -->
+      <input type="text" name="query" class="search-input" placeholder="Search by title, genre, mood, actor...">
 
 
-    <!-- Optional Filters -->
-    <select name="genre" class="filter-dropdown">
-      <option disabled selected>Genre (optional)</option>
-      <option>Action</option>
-      <option>Romance</option>
-      <option>Horror</option>
-      <option>Sci-Fi</option>
-      <option>Comedy</option>
-      <option>Biography</option>
-      <option>Thriller</option>
-      <option>Adventure</option>
-      <option>Drama</option>
-      <option>Animation</option>
-    </select>
 
-    <div class="slider-group">
-      <label>Release Year Range (optional)</label>
-      <input type="range" name="yearMin" min="1950" max="2025" value="2000"
-        oninput="document.getElementById('yearMinVal').innerText = this.value">
-      <input type="range" name="yearMax" min="1950" max="2025" value="2025"
-        oninput="document.getElementById('yearMaxVal').innerText = this.value">
-      <div class="slider-labels">
-        Min: <span id="yearMinVal">2000</span> — Max: <span id="yearMaxVal">2025</span>
+      <!-- Optional Filters -->
+      <select name="genre" class="filter-dropdown">
+        <option disabled selected>Genre (optional)</option>
+        <option>Action</option>
+        <option>Romance</option>
+        <option>Horror</option>
+        <option>Sci-Fi</option>
+        <option>Comedy</option>
+        <option>Biography</option>
+        <option>Thriller</option>
+        <option>Adventure</option>
+        <option>Drama</option>
+        <option>Animation</option>
+      </select>
+
+      <div class="slider-group">
+        <label>Release Year Range (optional)</label>
+        <input type="range" name="yearMin" min="1950" max="2025" value="2000"
+          oninput="document.getElementById('yearMinVal').innerText = this.value">
+        <input type="range" name="yearMax" min="1950" max="2025" value="2025"
+          oninput="document.getElementById('yearMaxVal').innerText = this.value">
+        <div class="slider-labels">
+          Min: <span id="yearMinVal">2000</span> — Max: <span id="yearMaxVal">2025</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Search Button -->
-    <div class="search-btn-container">
-      <button type="submit" class="search-btn">Search</button>
-    </div>
-  </form>
-</div>
+      <!-- Search Button -->
+      <div class="search-btn-container">
+        <button type="submit" class="search-btn">Search</button>
+      </div>
+    </form>
+  </div>

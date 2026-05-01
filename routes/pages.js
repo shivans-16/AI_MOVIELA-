@@ -36,6 +36,8 @@ router.get('/recommended', async (req, res) => {
   }
 });
 
+
+
 // Add to Wishlist
 router.post('/add-to-wishlist/:id', async (req, res) => {
   const movieId = req.params.id;
@@ -264,7 +266,7 @@ router.post('/api/verify-payment', async (req, res) => {
     try {
       const User = require('../models/user');
       await User.findByIdAndUpdate(req.user._id, { isPro: true });
-      
+
       console.log('Payment Verified for user:', req.user.username);
       res.json({ success: true, message: "Payment verified successfully" });
     } catch (err) {

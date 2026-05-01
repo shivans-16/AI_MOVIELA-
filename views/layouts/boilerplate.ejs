@@ -266,6 +266,7 @@
      </style>
 
      <!-- AI Assistant Widget -->
+     <% if (currentPath === '/movie-la' || currentPath === '/movie-la/' || currentPath === '/') { %>
      <div class="ai-assistant-widget">
       <% if (!currentUser) { %>
         <div class="ai-assistant-header" onclick="window.location.href='/login'" style="cursor: pointer;" title="Login to use AI-Assistant">
@@ -287,5 +288,6 @@
         </div>
       <% } %>
     </div>
+    <% } %>
 </body>
 </html>
