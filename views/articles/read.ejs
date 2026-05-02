@@ -1,0 +1,216 @@
+<% layout('layouts/boilerplate') %>
+<style>
+.article-page {
+  max-width: 1100px;
+  margin: 60px auto;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  color: #e0e0e0;
+}
+.article-header {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 40px;
+}
+.article-poster-wrapper {
+  flex: 0 0 350px;
+}
+.article-poster {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 20px rgba(0, 229, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.article-intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.article-title {
+  font-size: 4rem;
+  color: #fff;
+  margin-bottom: 15px;
+  line-height: 1.1;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(135deg, #fff, #00e5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.article-subtitle {
+  font-size: 1.2rem;
+  color: #b084f9;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.article-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.meta-item {
+  margin-bottom: 10px;
+}
+.meta-item strong {
+  display: block;
+  color: #00e5ff;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.meta-item span {
+  font-size: 1.1rem;
+  color: #fff;
+}
+.rating-badge {
+  display: inline-block;
+  background: rgba(255, 215, 0, 0.2);
+  color: #ffd700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.article-body {
+  font-family: 'Georgia', serif;
+  font-size: 1.3rem;
+  line-height: 1.9;
+  color: #d1d1d1;
+}
+.article-body h2 {
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  font-size: 2.2rem;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-left: 5px solid #00e5ff;
+  padding-left: 15px;
+}
+.where-to-watch {
+  margin-top: 50px;
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(176, 6, 16, 0.05));
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+}
+.where-to-watch h3 {
+  color: #e50914;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+.where-to-watch p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.btn-watch {
+  display: inline-block;
+  background: #e50914;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-watch:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4);
+}
+.back-btn {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #b084f9;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+.back-btn:hover {
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  .article-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .article-title {
+    text-align: center;
+    font-size: 2.8rem;
+  }
+  .article-subtitle {
+    text-align: center;
+  }
+  .article-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="article-page">
+  <a href="/articles" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Articles</a>
+  
+  <div class="article-header">
+    <div class="article-poster-wrapper">
+      <% const poster = article.Poster !== 'N/A' ? article.Poster : 'https://via.placeholder.com/350x500/1a1a1a/00e5ff?text=No+Poster'; %>
+      <img src="<%= poster %>" alt="<%= article.Title %>" class="article-poster">
+    </div>
+    
+    <div class="article-intro">
+      <h1 class="article-title"><%= article.Title %></h1>
+      <div class="article-subtitle"><%= article.Year %> • <%= article.Genre %> • <%= article.Runtime %></div>
+      
+      <div class="article-meta-grid">
+        <div class="meta-item">
+          <strong>Director</strong>
+          <span><%= article.Director %></span>
+        </div>
+        <div class="meta-item">
+          <strong>Cast</strong>
+          <span><%= article.Actors %></span>
+        </div>
+        <div class="meta-item">
+          <strong>IMDb Rating</strong>
+          <span class="rating-badge"><i class="fas fa-star"></i> <%= article.imdbRating %></span>
+        </div>
+        <div class="meta-item">
+          <strong>Released</strong>
+          <span><%= article.Released %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <h2>What is it about?</h2>
+    <p><%= article.Plot %></p>
+    
+    <div style="margin-top: 40px; padding: 20px; border-left: 4px solid #b084f9; background: rgba(176, 132, 249, 0.05); font-style: italic; font-size: 1.1rem;">
+      <strong style="color: #b084f9; display: block; margin-bottom: 5px; font-style: normal;">Awards & Recognition:</strong>
+      <%= article.Awards !== 'N/A' ? article.Awards : 'No notable awards listed.' %>
+    </div>
+  </div>
+
+  <div class="where-to-watch">
+    <h3>Ready to Watch?</h3>
+    <p>Find out where you can stream, rent, or buy <strong><%= article.Title %></strong> online.</p>
+    <a href="https://www.google.com/search?q=where+to+watch+<%= encodeURIComponent(article.Title) %>" target="_blank" class="btn-watch"><i class="fas fa-play-circle"></i> Find Where to Watch</a>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<% layout('layouts/boilerplate') %>
+<style>
+.articles-search-container { max-width: 900px; margin: 60px auto; text-align: center; }
+.articles-search-container h1 { font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #00e5ff, #b084f9); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.search-form-large { display: flex; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 50px; overflow: hidden; padding: 5px; box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1); margin-bottom: 40px; transition: all 0.3s ease; }
+.search-form-large:focus-within { border-color: #00e5ff; box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2); }
+.search-form-large input { flex: 1; background: transparent; border: none; padding: 15px 25px; color: #fff; font-size: 1.2rem; outline: none; }
+.search-form-large button { background: linear-gradient(135deg, #00e5ff, #008cff); border: none; border-radius: 40px; padding: 15px 35px; color: #fff; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
+.search-form-large button:hover { transform: scale(1.05); }
+.results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; text-align: left; }
+.result-card { background: rgba(20, 20, 20, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; overflow: hidden; text-decoration: none; color: #fff; transition: transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; }
+.result-card:hover { transform: translateY(-10px); border-color: #00e5ff; }
+.result-poster { width: 100%; height: 300px; object-fit: cover; }
+.result-info { padding: 15px; }
+.result-title { font-size: 1.1rem; margin: 0 0 5px 0; font-weight: bold; }
+.result-year { color: #ccc; font-size: 0.9rem; margin: 0; }
+.loading { font-size: 1.5rem; color: #00e5ff; display: none; margin-top: 20px; }
+</style>
+
+<div class="articles-search-container">
+  <h1>Discover Movie Articles</h1>
+  <p style="color: #ccc; font-size: 1.2rem; margin-bottom: 40px;">Search for any title to read detailed theories, plots, and analysis.</p>
+  
+  <form class="search-form-large" id="articleSearchForm">
+    <input type="text" id="searchInput" placeholder="Search movies, series..." required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="loading" class="loading"><i class="fas fa-spinner fa-spin"></i> Finding articles...</div>
+  <div id="resultsGrid" class="results-grid"></div>
+</div>
+
+<script>
+document.getElementById('articleSearchForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) return;
+
+  const resultsGrid = document.getElementById('resultsGrid');
+  const loading = document.getElementById('loading');
+  
+  resultsGrid.innerHTML = '';
+  loading.style.display = 'block';
+
+  try {
+    const res = await fetch(`https://www.omdbapi.com/?apikey=a72e8af8&s=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    loading.style.display = 'none';
+
+    if (data.Response === 'True') {
+      data.Search.forEach(item => {
+        const poster = item.Poster !== 'N/A' ? item.Poster : 'https://via.placeholder.com/300x450/1a1a1a/00e5ff?text=No+Poster';
+        const card = `
+          <a href="/articles/read/${item.imdbID}" class="result-card">
+            <img src="${poster}" alt="${item.Title}" class="result-poster">
+            <div class="result-info">
+              <h3 class="result-title">${item.Title}</h3>
+              <p class="result-year">${item.Year} | ${item.Type}</p>
+            </div>
+          </a>
+        `;
+        resultsGrid.innerHTML += card;
+      });
+    } else {
+      resultsGrid.innerHTML = `<h3 style="grid-column: 1/-1; color: #ff4da6;">No results found. Try another search!</h3>`;
+    }
+  } catch (err) {
+    loading.style.display = 'none';
+    resultsGrid.innerHTML = `<h3 style="grid-column: 1/-1; color: red;">Error fetching results.</h3>`;
+  }
+});
+</script>
