@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %>
+<style>
+.admin-container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+.admin-header { text-align: center; margin-bottom: 40px; }
+.admin-header h1 { font-size: 2.5rem; color: #fff; background: linear-gradient(135deg, #ff4da6, #b084f9); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.admin-stats { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+.stat-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 40px; text-align: center; min-width: 250px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease; }
+.stat-card:hover { transform: translateY(-5px); border-color: rgba(255, 77, 166, 0.5); }
+.stat-icon { font-size: 3rem; color: #ffcc70; margin-bottom: 15px; }
+.stat-number { font-size: 3.5rem; font-weight: 800; color: #fff; margin: 10px 0; }
+.stat-label { color: #b3b3b3; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+.admin-actions { text-align: center; margin-top: 50px; }
+.btn-primary { padding: 15px 30px; background: linear-gradient(135deg, #e50914 0%, #b00610 100%); color: #fff; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 1.1rem; transition: transform 0.3s, box-shadow 0.3s; display: inline-block; }
+.btn-primary:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
+</style>
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p style="color: #ccc;">Overview of AI-MovieLA statistics</p>
+  </div>
+  <div class="admin-stats">
+    <div class="stat-card">
+      <i class="fas fa-users stat-icon"></i>
+      <div class="stat-number"><%= totalUsers %></div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-crown stat-icon" style="color: #ffd700;"></i>
+      <div class="stat-number"><%= proUsers %></div>
+      <div class="stat-label">Pro Users</div>
+    </div>
+  </div>
+  <div class="admin-actions">
+    <a href="/admin/users" class="btn-primary">Manage All Users</a>
+  </div>
+</div>

@@ -78,7 +78,9 @@ async function main() {
 }
 app.use('/', authRoutes);
 const indexRoutes = require("./routes/index");
+const adminRoutes = require('./routes/admin');
 app.use("/movie-la", indexRoutes);
+app.use("/admin", adminRoutes);
 app.use(movieRoutes);
 app.use('/', pageRoutes);
 

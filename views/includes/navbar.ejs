@@ -12,6 +12,9 @@
     <div class="Moodboards hov"><a class="inl" href="/trending">Trending</a></div>
     <% if (currentUser) { %>
       <div class="upgrade hov"><a class="inl nav-upgrade" href="/upgrade">Upgrade to Pro</a></div>
+      <% if (currentUser.isAdmin) { %>
+        <div class="upgrade hov"><a class="inl" style="color:#ff4da6;" href="/admin">Admin Panel</a></div>
+      <% } %>
     <% } %>
   </div>
 
