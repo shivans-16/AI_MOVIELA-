@@ -11,7 +11,11 @@
     <div class="search hov"><a class="inl" href="/explore">Explore All</a></div>
     <div class="Moodboards hov"><a class="inl" href="/trending">Trending</a></div>
     <% if (currentUser) { %>
-      <div class="upgrade hov"><a class="inl nav-upgrade" href="/upgrade">Upgrade to Pro</a></div>
+      <% if (currentUser.isPro) { %>
+        <div class="upgrade hov"><span class="inl" style="color:#ffd700; font-weight:bold; cursor:default; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);"><i class="fas fa-crown"></i> PRO Member</span></div>
+      <% } else { %>
+        <div class="upgrade hov"><a class="inl nav-upgrade" href="/upgrade">Upgrade to Pro</a></div>
+      <% } %>
       <% if (currentUser.isAdmin) { %>
         <div class="upgrade hov"><a class="inl" style="color:#ff4da6;" href="/admin">Admin Panel</a></div>
       <% } %>

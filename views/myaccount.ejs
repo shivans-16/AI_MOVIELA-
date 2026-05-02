@@ -74,11 +74,21 @@
       <h2 class="profile-heading">My Profile</h2>
       <div class="profile-icon">
         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Picture"
-          class="rounded-circle mx-auto d-block" style="width: 120px; height: 120px; object-fit: cover;">
+          class="rounded-circle mx-auto d-block" style="width: 120px; height: 120px; object-fit: cover; <%= currentUser.isPro ? 'border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);' : '' %>">
       </div>
       <h2 class="username">Welcome - <%= currentUser.username %>
+        <% if (currentUser.isPro) { %>
+          <i class="fas fa-crown" style="color: #ffd700; font-size: 1.2rem; margin-left: 8px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);" title="Pro Member"></i>
+        <% } %>
       </h2>
       <div class="account-details">
+        <p><strong>Status:</strong> 
+          <% if (currentUser.isPro) { %>
+            <span style="color: #ffd700; font-weight: bold;"><i class="fas fa-crown"></i> PRO Member</span>
+          <% } else { %>
+            <span style="color: #ccc;">FREE</span> (<a href="/upgrade" style="color: #ffd700;">Upgrade to PRO</a>)
+          <% } %>
+        </p>
         <p><strong>Email:</strong>
           <%= currentUser.email %>
         </p>
