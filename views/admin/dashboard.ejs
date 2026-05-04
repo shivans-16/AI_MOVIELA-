@@ -29,8 +29,19 @@
       <div class="stat-number"><%= proUsers %></div>
       <div class="stat-label">Pro Users</div>
     </div>
+    <div class="stat-card">
+      <i class="fas fa-film stat-icon" style="color: #ff4da6;"></i>
+      <div class="stat-number"><%= totalMovies %></div>
+      <div class="stat-label">Total Movies</div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-heart stat-icon" style="color: #ff4d4d;"></i>
+      <div class="stat-number"><%= totalWishlists %></div>
+      <div class="stat-label">Wishlist Items</div>
+    </div>
   </div>
   <div class="admin-actions">
     <a href="/admin/users" class="btn-primary">Manage All Users</a>
+    <a href="/admin/movies" class="btn-primary" style="margin-left: 15px; background: linear-gradient(135deg, #1f2937 0%, #111827 100%);">Manage Movies</a>
   </div>
 </div>

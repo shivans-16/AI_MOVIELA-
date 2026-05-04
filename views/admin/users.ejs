@@ -19,7 +19,11 @@
 .btn-action { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; transition: transform 0.2s, opacity 0.2s; }
 .btn-action:hover { opacity: 0.8; transform: translateY(-2px); }
 .btn-toggle-pro { background: #4d4dff; color: #fff; }
+.btn-toggle-admin { background: #10b981; color: #fff; }
 .btn-delete { background: #e50914; color: #fff; }
+.search-container { margin-bottom: 20px; display: flex; justify-content: flex-end; }
+.search-input { padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.5); color: #fff; width: 300px; outline: none; }
+.search-input:focus { border-color: #b084f9; }
 </style>
 <div class="admin-container">
   <div class="admin-header">
@@ -27,7 +31,10 @@
     <a href="/admin" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
   </div>
   <div class="users-table-container">
-    <table class="users-table">
+    <div class="search-container">
+      <input type="text" id="userSearch" class="search-input" placeholder="Search by username or email...">
+    </div>
+    <table class="users-table" id="usersTable">
       <thead>
         <tr>
           <th>Username</th>
@@ -63,6 +70,13 @@
                     <%= user.isPro ? 'Revoke Pro' : 'Grant Pro' %>
                   </button>
                 </form>
+                <% if (!currentUser._id.equals(user._id)) { %>
+                  <form action="/admin/users/<%= user._id %>/toggle-admin" method="POST">
+                    <button type="submit" class="btn-action btn-toggle-admin">
+                      <%= user.isAdmin ? 'Revoke Admin' : 'Grant Admin' %>
+                    </button>
+                  </form>
+                <% } %>
                 <% if(!user.isAdmin) { %>
                   <form action="/admin/users/<%= user._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
                     <button type="submit" class="btn-action btn-delete">Delete</button>
@@ -76,3 +90,21 @@
     </table>
   </div>
 </div>
+</div>
+
+<script>
+document.getElementById('userSearch').addEventListener('keyup', function() {
+  const filter = this.value.toLowerCase();
+  const rows = document.querySelectorAll('#usersTable tbody tr');
+  
+  rows.forEach(row => {
+    const username = row.cells[0].textContent.toLowerCase();
+    const email = row.cells[1].textContent.toLowerCase();
+    if (username.includes(filter) || email.includes(filter)) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
+</script>
