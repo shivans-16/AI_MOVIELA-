@@ -108,46 +108,69 @@
 .modal-actions {
   display: flex;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .btn-readmore {
   flex: 1;
-  background: linear-gradient(135deg, #ff4da6, #f9057f);
+  background: linear-gradient(135deg, #ff007f, #7928ca);
   color: #fff;
   border: none;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1.1rem;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 1.15rem;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 5px 15px rgba(255, 77, 166, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 8px 25px rgba(255, 0, 127, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
   text-align: center;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .btn-readmore:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 77, 166, 0.4);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(255, 0, 127, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #ff1493, #8a2be2);
+}
+
+.btn-readmore:active {
+  transform: translateY(1px);
 }
 
 .btn-addmood {
   flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  color: #b084f9;
-  border: 1px solid #b084f9;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 1.15rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  backdrop-filter: blur(5px);
 }
 
 .btn-addmood:hover {
-  background: rgba(176, 132, 249, 0.15);
-  transform: translateY(-2px);
+  background: rgba(0, 255, 255, 0.15);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.4);
+  color: #fff;
+}
+
+.btn-addmood:active {
+  transform: translateY(1px);
 }
 
 @keyframes modalFadeIn {
@@ -212,9 +235,19 @@
       </p>
 
       <div class="modal-actions">
-        <a href="/movie-la/details/<%= movie._id %>" class="btn-readmore">Read More</a>
-        <form action="/add-to-wishlist/<%= movie._id %>" method="POST" style="flex: 1; display: flex;">
-          <button type="submit" class="btn-addmood" style="width: 100%;">+ Add to Watchlist</button>
+        <% 
+           let readMoreLink = `https://www.imdb.com/find/?q=${encodeURIComponent(movie.title)}`;
+           if (externalData && externalData.imdbID) {
+             readMoreLink = `https://www.imdb.com/title/${externalData.imdbID}/`;
+           }
+        %>
+        <a href="<%= readMoreLink %>" target="_blank" class="btn-readmore">
+          <span style="margin-right: 8px;">🎬</span> Read More
+        </a>
+        <form action="/add-to-wishlist/<%= movie._id %>" method="POST" style="flex: 1; display: flex; margin: 0;">
+          <button type="submit" class="btn-addmood" style="width: 100%;">
+            <span style="margin-right: 8px;">➕</span> Add to Watchlist
+          </button>
         </form>
       </div>
 

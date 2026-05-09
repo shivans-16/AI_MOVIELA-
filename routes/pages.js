@@ -169,7 +169,26 @@ router.post('/ai-results', async (req, res) => {
 
     // Run query
     if (conditions.length > 0) {
-      dbResults = await Movie.find({ $and: conditions });
+      const rawDbResults = await Movie.find({ $and: conditions }).limit(10);
+      
+      dbResults = await Promise.all(rawDbResults.map(async (movie) => {
+        let finalImage = movie.image;
+        try {
+          const res = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&t=${encodeURIComponent(movie.title.trim())}`);
+          if (res.data && res.data.Poster && res.data.Poster !== "N/A") {
+            finalImage = res.data.Poster;
+          }
+        } catch (e) {
+          console.error("OMDB fetch failed for", movie.title, e.message);
+        }
+        
+        if (!finalImage || finalImage === "N/A" || finalImage.includes("/images/default.jpg")) {
+           finalImage = "https://via.placeholder.com/300x450?text=No+Poster";
+        }
+
+        const movieObj = movie.toObject ? movie.toObject() : movie;
+        return { ...movieObj, image: finalImage };
+      }));
     }
 
     // OMDb fallback
@@ -181,18 +200,18 @@ router.post('/ai-results', async (req, res) => {
             title: m.Title,
             year: m.Year,
             genre: "Unknown",
-            image: m.Poster !== "N/A" ? m.Poster : "/images/default.jpg",
+            image: m.Poster !== "N/A" ? m.Poster : "https://via.placeholder.com/300x450?text=No+Poster",
             description: "Fetched from OMDb",
             source: "external"
           }));
         } else {
-          const exactRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&t=${encodeURIComponent(keywordQuery)}`);
+          const exactRes = await axios.get(`https://www.omdbapi.com/?apikey=a72e8af8&t=${encodeURIComponent(keywordQuery.trim())}`);
           if (exactRes.data && exactRes.data.Title) {
             externalResults.push({
               title: exactRes.data.Title,
               year: exactRes.data.Year,
               genre: exactRes.data.Genre || "Unknown",
-              image: exactRes.data.Poster !== "N/A" ? exactRes.data.Poster : "/images/default.jpg",
+              image: exactRes.data.Poster !== "N/A" ? exactRes.data.Poster : "https://via.placeholder.com/300x450?text=No+Poster",
               description: exactRes.data.Plot || "Fetched from OMDb",
               source: "external"
             });
