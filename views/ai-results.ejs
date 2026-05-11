@@ -46,28 +46,35 @@
   margin-top: 20px;
 }
 
-/* Scroll Row */
-.scroll-row {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 20px;
+/* Movies Grid Layout */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 20px;
+  justify-items: center;
+  padding-bottom: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.scroll-row::-webkit-scrollbar {
-  height: 8px;
+/* Responsive adjustments for smaller screens */
+@media (max-width: 992px) {
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.scroll-row::-webkit-scrollbar-thumb {
-  background-color: #ff4da6;
-  border-radius: 4px;
+@media (max-width: 600px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Movie Card Styling */
 .movie-card {
-  min-width: 260px;
-  height: 400px;
+  width: 100%;
+  max-width: 320px;
+  height: 450px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border-radius: 16px;
@@ -76,7 +83,6 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  scroll-snap-align: start;
 }
 
 .movie-card:hover {
@@ -121,8 +127,8 @@
 
 /* View Button */
 .view-btn {
-  margin-top: 10px;
-  padding: 8px 16px;
+  margin-top: auto;
+  padding: 10px 16px;
   background-color: #ff4da6;
   color: white;
   border: none;
@@ -130,10 +136,15 @@
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .view-btn:hover {
   background-color: #e63c91;
+  color: white;
 }
 
 /* Detail Box */
@@ -344,14 +355,14 @@
   <% if (movies.length === 0) { %>
     <p class="no-results">No movies found for selected filters.</p>
   <% } else { %>
-    <div class="<%= movies.length === 1 ? 'centered-card' : 'scroll-row' %>">
+    <div class="<%= movies.length === 1 ? 'centered-card' : 'movies-grid' %>">
       <% movies.forEach(movie => { %>
         <div class="movie-card">
           <img src="<%= movie.image %>" alt="<%= movie.title %>">
           <div class="card-info">
             <h3><%= movie.title %></h3>
             <p><%= movie.genre %> | <%= movie.year %></p>
-            <button class="view-btn" onclick="showDetails('<%= movie._id %>')">View</button>
+            <a class="view-btn" href="https://www.themoviedb.org/search?query=<%= encodeURIComponent(movie.title) %>" target="_blank">View Details</a>
             
           </div>
         </div>
