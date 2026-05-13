@@ -1,0 +1,178 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+body {
+    background: rgb(15, 23, 42);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    margin: 0;
+}
+
+.books-container {
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.books-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.books-header h1 {
+    font-size: 3rem;
+    color: #ffcc70;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.search-form input {
+    width: 60%;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 0;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-form input:focus {
+    border-color: #ffcc70;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.search-form button {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    background: #ffcc70;
+    color: #1a1a2e;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.search-form button:hover {
+    background: #e6b800;
+    transform: translateY(-2px);
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.book-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(255, 204, 112, 0.2);
+}
+
+.book-cover {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 1.3rem;
+    color: #ffcc70;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.book-author {
+    color: #aaa;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.read-btn {
+    margin-top: auto;
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: #ffcc70;
+    border: 2px solid #ffcc70;
+    padding: 12px 0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.read-btn:hover {
+    background: #ffcc70;
+    color: #1a1a2e;
+}
+
+.no-results {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ccc;
+    grid-column: 1 / -1;
+}
+</style>
+
+<div class="books-container">
+    <div class="books-header">
+        <h1>📚 Sahitya & Religious Books</h1>
+        <form class="search-form" action="/books" method="GET">
+            <input type="text" name="q" placeholder="Search for Hindi novels, religious books, writers..." value="<%= searchQuery %>" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="books-grid">
+        <% if (books && books.length > 0) { %>
+            <% books.forEach(book => { %>
+                <% const title = book.title; %>
+                <% const coverImg = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`; %>
+                <% const author = book.author_name ? book.author_name.join(', ') : 'Unknown Author'; %>
+                <% const readLink = (book.ia && book.ia.length > 0) ? `https://archive.org/details/${book.ia[0]}/mode/2up` : `https://openlibrary.org${book.key}`; %>
+
+                <div class="book-card">
+                    <img src="<%= coverImg %>" alt="<%= title %>" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title"><%= title %></h3>
+                        <p class="book-author"><%= author %></p>
+                        <a href="<%= readLink %>" target="_blank" class="read-btn">Read Book</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="no-results">No books found. Try a different search.</div>
+        <% } %>
+    </div>
+</div>
