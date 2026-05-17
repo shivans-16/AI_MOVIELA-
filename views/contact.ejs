@@ -266,30 +266,41 @@
     const successOverlay = document.getElementById('successOverlay');
     const submitBtn = document.getElementById('submitBtn');
 
-    contactForm.addEventListener('submit', function (e) {
+    contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-
 
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
 
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData.entries());
 
-      setTimeout(() => {
+      try {
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
 
-        successOverlay.classList.add('active');
-
-
-        contactForm.reset();
-
-
+        if (response.ok) {
+          successOverlay.classList.add('active');
+          contactForm.reset();
+          
+          setTimeout(() => {
+            window.location.href = '/movie-la';
+          }, 2000);
+        } else {
+          alert('Failed to send message. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
-
-
-        setTimeout(() => {
-          window.location.href = '/movie-la';
-        }, 2000);
-      }, 1500);
+      }
     });
 
     function closeSuccessModal() {

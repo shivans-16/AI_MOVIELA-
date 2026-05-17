@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Contact = require('../models/contactUs');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
@@ -47,12 +48,19 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/myaccount', (req, res) => {
+router.get('/myaccount', async (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('error', 'You must be logged in to view your account');
     return res.redirect('/login');
   }
-  res.render('myaccount.ejs', { title: 'Your Account' });
+  
+  try {
+    const userContacts = await Contact.find({ userId: req.user._id }).sort({ createdAt: -1 });
+    res.render('myaccount.ejs', { title: 'Your Account', userContacts });
+  } catch (error) {
+    console.error('Error fetching user contacts:', error);
+    res.render('myaccount.ejs', { title: 'Your Account', userContacts: [] });
+  }
 });
 
 router.get('/logout', (req, res) => {
@@ -79,15 +87,27 @@ router.get('/contact', (req, res) => {
   res.render('contact.ejs');
 });
 
-router.post('/contact', (req, res) => {
+router.post('/contact', async (req, res) => {
   if (!req.isAuthenticated()) {
-    req.flash('error', 'You must be logged in to contct us');
-    return res.redirect('/login');
+    return res.status(401).json({ error: 'You must be logged in to contact us' });
   }
-  const { name, email, message } = req.body;
+  
+  const { name, email, phone, subject, message } = req.body;
 
-  req.flash('success', 'We will get in contact with you very soon.');
-  res.redirect('/movie-la');
+  try {
+    await Contact.create({
+      fullName: name,
+      emailAddress: email,
+      phoneNumber: phone,
+      subject: subject,
+      message: message,
+      userId: req.user._id
+    });
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Contact submit error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 module.exports = router;

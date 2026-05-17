@@ -96,5 +96,124 @@
         <p><strong>My MoodBoards:</strong> <a href="/moodboards">View MoodBoards</a></p>
         <p><strong>AI-Recommendations:</strong> <a href="/recommended">Movies For You..</a></p>
       </div>
+      
+      <!-- Notifications Section -->
+      <div class="notifications-section">
+        <h4 class="notifications-title"><i class="fas fa-bell"></i> Notifications & Replies</h4>
+        
+        <% if (typeof userContacts !== 'undefined' && userContacts.length > 0) { %>
+          <% const repliedContacts = userContacts.filter(c => c.status === 'Replied'); %>
+          <% if (repliedContacts.length > 0) { %>
+            <div class="notifications-list">
+              <% repliedContacts.forEach(contact => { %>
+                <div class="notification-item">
+                  <div class="notification-header">
+                    <strong class="subject">Re: <%= contact.subject || 'Your Inquiry' %></strong>
+                    <span class="date"><%= new Date(contact.createdAt).toLocaleDateString() %></span>
+                  </div>
+                  <p class="user-msg">"<%= contact.message.length > 50 ? contact.message.substring(0, 50) + '...' : contact.message %>"</p>
+                  <div class="admin-reply-box">
+                    <strong><i class="fas fa-headset"></i> Support Reply:</strong>
+                    <p class="reply-text"><%= contact.adminReply %></p>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p>Your queries are currently being reviewed. You will receive a notification here once an admin replies.</p>
+            </div>
+          <% } %>
+        <% } else { %>
+          <div class="empty-state">
+            <i class="fas fa-envelope-open-text"></i>
+            <p>You haven't submitted any contact queries yet. Once you do, admin replies will appear here.</p>
+          </div>
+        <% } %>
+      </div>
     </div>
   </div>
+
+<style>
+.notifications-section {
+  margin-top: 30px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.notifications-title {
+  color: #00e5ff;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.notification-item {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid #00e5ff;
+  padding: 15px;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.3s;
+}
+.notification-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.notification-header .subject {
+  color: #ffcc70;
+  font-size: 1.1rem;
+}
+.notification-header .date {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+.user-msg {
+  color: #aaa;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+.admin-reply-box {
+  background: rgba(0, 229, 255, 0.08);
+  padding: 12px;
+  border-radius: 8px;
+}
+.admin-reply-box strong {
+  color: #00e5ff;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 5px;
+}
+.reply-text {
+  color: #fff;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.empty-state {
+  text-align: center;
+  padding: 20px 0;
+  color: #888;
+}
+.empty-state i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+.empty-state p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+</style>

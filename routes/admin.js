@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Movie = require('../models/movie');
 const Wishlist = require('../models/wishlist');
+const Contact = require('../models/contactUs');
 const { isAdmin } = require('../middleware');
 
 router.get('/', isAdmin, async (req, res) => {
@@ -89,6 +90,29 @@ router.post('/movies/:id/delete', isAdmin, async (req, res) => {
     req.flash('error', 'Failed to delete movie.');
   }
   res.redirect('/admin/movies');
+});
+
+router.get('/contacts', isAdmin, async (req, res) => {
+  try {
+    const contacts = await Contact.find({}).sort({ createdAt: -1 }).populate('userId');
+    res.render('admin/contacts', { title: 'Manage Contacts', contacts });
+  } catch (err) {
+    req.flash('error', 'Failed to fetch contacts.');
+    res.redirect('/admin');
+  }
+});
+
+router.post('/contacts/:id/reply', isAdmin, async (req, res) => {
+  try {
+    const { adminReply } = req.body;
+    await Contact.findByIdAndUpdate(req.params.id, {
+      adminReply,
+      status: 'Replied'
+    });
+    res.status(200).json({ success: true, message: 'Reply sent successfully.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to send reply.' });
+  }
 });
 
 module.exports = router;
