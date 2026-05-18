@@ -79,12 +79,8 @@ async function main() {
 app.use('/', authRoutes);
 const indexRoutes = require("./routes/index");
 const adminRoutes = require('./routes/admin');
-const articlesRoutes = require('./routes/articles');
-const booksRoutes = require('./routes/books');
 app.use("/movie-la", indexRoutes);
 app.use("/admin", adminRoutes);
-app.use("/articles", articlesRoutes);
-app.use("/books", booksRoutes);
 app.use(movieRoutes);
 app.use('/', pageRoutes);
 
